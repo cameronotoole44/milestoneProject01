@@ -1,3 +1,46 @@
+class Card {
+    constructor(value, suit, points) {
+        this.value = value;
+        this.suit = suit;
+        this.points = points;
+    }
+}
+class Deck {
+    constructor() {
+        this.cards = [];
+        this.initializeDeck();
+    }
+
+    initializeDeck() {
+        const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
+        const values = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King'];
+        for (let value of values) {
+            for (let suit of suits) {
+                let points = (value === 'Ace') ? 11 : (isNaN(parseInt(value)) ? 10 : parseInt(value));
+                this.cards.push(new Card(value, suit, points));
+            }
+        }
+    }
+
+    shuffle() {
+        for (let i = this.cards.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
+        }
+    }
+}
+
+const myDeck = new Deck();
+// console.log(myDeck.cards);
+myDeck.shuffle();
+// console.log(myDeck.cards);
+myDeck.cards.forEach(card => {
+    console.log(card.value, card.suit, card.points);
+});
+
+
+
+
 const deal = document.getElementById('deal');
 const hit = document.getElementById('hit');
 const stand = document.getElementById('stand');
