@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack</title>
+    <link rel="icon" href="assets/redChip-Icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Handjet:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cards.css">
+</head>
+
+<body>
+    <!-- settings -->
+    <header>
+        <nav class="settings-container">
+            <div class="settings">
+                <a href="rules/rules.html">RULES</a>
+                <a href="rules/cardValues.html">CARD VALUES</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- main title -->
+    <main>
+        <div class="main-title">
+            <h1>BLACKJACK</h1>
+        </div>
+    </main>
+
+    <!-- gamba -->
+    <section id="gambaSection">
+        <p>Place bet to start!</p>
+        <div class="playerTotal">Total $ <span id="playerMoney">1000</span></div>
+        <div class="playerBet"> Bet $ <span id="playerBet">0</span></div>
+        <div id="gambaButtons">
+            <button id="bet1">$1</button>
+            <button id="bet5">$5</button>
+            <button id="bet25">$25</button>
+            <button id="bet100">$100</button>
+        </div>
+    </section>
+
+    <!-- game board -->
+    <section id="board">
+        <div id="dealerRow">
+
+            <h2>Dealer:</h2>
+            <div id="dealerResult"></div>
+
+            <div id="dealer" class="cardHolder">
+                <div id="dealerHand" class="card">CARDS GOES HERE</div>
+            </div>
+        </div>
+
+        <br>
+
+        <div id="playerRow">
+            <h2>Player:</h2>
+            <div id="playerResult"></div>
+
+            <div id="player" class="cardHolder">
+                <div id="playerHand" class="card">CARDS GO HERE</div>
+            </div>
+        </div>
+
+        <br>
+    </section>
+    <section id="playerControls">
+        <button id="hit">Hit</button>
+        <button id="stand">Stand</button>
+        <button id="double">Double</button>
+        <button id="deal">Deal</button>
+    </section>
+
+    <div id="resetContainer">
+        <button id="newHand">New Hand</button>
+    </div>
+
+    <script src="index.js"></script>
+    <script src="cards.js"></script>
+</body>
+
+</html>
