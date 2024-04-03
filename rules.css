@@ -1,0 +1,81 @@
+/* rules styling */
+body {
+  background-color: #1b1919;
+  font-family: "Handjet", sans-serif;
+  overflow: hidden;
+  background-image: url("./assets/skyline.png");
+  align-items: flex-end;
+  background-size: contain;
+  background-position: top;
+  padding: 40px;
+  height: 180px;
+}
+
+header {
+  display: flex;
+  justify-content: right;
+  font-size: 20px;
+}
+nav a {
+  color: #76cbfc;
+  text-decoration: none;
+  display: flex;
+}
+nav a:hover {
+  color: #00ffb3;
+  box-shadow: 0 0 4px #00ffb3;
+  display: inline-block;
+}
+
+h1 {
+  align-items: center;
+  text-decoration: 4px underline #ad4cda;
+  text-shadow: 8px 8px 8px #76cbfc;
+  font-size: 100px;
+  font-weight: SemiBold 600;
+  text-align: center;
+  color: #fff;
+}
+
+h2 {
+  font-size: 40px;
+}
+
+.blackjack {
+  color: #76cbfc;
+  background-color: #9494945b;
+  border-top: 4px solid #2c2c2c;
+  border-bottom: 4px solid #2c2c2c;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-evenly;
+  position: relative;
+  animation: moveBanner 20s linear infinite;
+}
+.blackjack:hover {
+  color: #00ffbf;
+  background-color: #c4c4c4af;
+  border-top: 4px solid #76cbfc;
+  border-bottom: 4px solid #76cbfc;
+}
+
+.rulesList {
+  color: #76cbfc;
+  font-size: 40px;
+  font-weight: SemiBold;
+  padding: 80px;
+}
+
+.rulesList:hover {
+  border: 2px solid #949494;
+  box-shadow: 0 6px 6px #76cbfc;
+}
+
+@keyframes moveBanner {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
