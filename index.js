@@ -1,3 +1,4 @@
+// build cards, build deck, shuffle 
 class Card {
     constructor(value, suit, points) {
         this.value = value;
@@ -5,23 +6,24 @@ class Card {
         this.points = points;
     }
 }
+
 class Deck {
     constructor() {
         this.cards = [];
-        this.initializeDeck();
+        this.createDeck();
+        this.shuffle();
     }
-
-    initializeDeck() {
+    createDeck() {
         const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
         const values = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King'];
         for (let value of values) {
             for (let suit of suits) {
-                let points = (value === 'Ace') ? 11 : (isNaN(parseInt(value)) ? 10 : parseInt(value));
+                let points = (value === 'A') ? 11 : (isNaN(parseInt(value)) ? 10 : parseInt(value));
                 this.cards.push(new Card(value, suit, points));
             }
         }
     }
-
+    // shuffle refactored a bit
     shuffle() {
         for (let i = this.cards.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -30,69 +32,116 @@ class Deck {
     }
 }
 
-const myDeck = new Deck();
-// console.log(myDeck.cards);
-myDeck.shuffle();
-// console.log(myDeck.cards);
-myDeck.cards.forEach(card => {
-    console.log(card.value, card.suit, card.points);
-});
-
-
-
-
-const deal = document.getElementById('deal');
-const hit = document.getElementById('hit');
-const stand = document.getElementById('stand');
-const dealer = document.getElementById('dealer');
-const player = document.getElementById('player');
-const result = document.getElementById('result');
-// betting variables
-let playerMoney = 1000;
-let playerBet = 0;
-const minBet = 1;
-const maxBet = playerMoney;
-// gamba section checks COMPLETE // 
-// variables here instead 
-const gambaButtons = document.querySelectorAll('#gambaButtons button');
-const doubleButton = document.getElementById('doubleButton');
-gambaButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const betAmountText = button.textContent.replace('$', '');
-        const betAmount = parseInt(betAmountText, 10);
-        // check validity of bet
-        if (playerMoney >= betAmount) {
-            playerBet += betAmount;
-            playerMoney -= betAmount;
-            updatePlayerTotal(playerMoney); // updates player money
-            updatePlayerBet(playerBet); // keeps tab on how much player has bet
-        } else {
-            alert('Invalid bet or not enough money!');
+class Player {
+    constructor(name) {
+        this.score = 0;
+        this.hand = [];
+    }
+    addScore() {
+        this.score = 0;
+        for (let i = 0; i < this.hand.length; i++) {
+            const card = this.hand[i];
+            this.score += card;
         }
-    })
-
-})
-
-double.addEventListener('click', doubleGamba);
-// double gamba
-function doubleGamba() {
-    if (playerBet * 2 <= playerMoney) {
-        playerBet *= 2;
-        playerMoney -= playerBet / 2;
-        updatePlayerTotal(playerMoney);
-        updatePlayerBet(playerBet);
-    } else {
-        double.disabled = true;
-        alert('Invalid bet! Not enough money!');
+    }
+    checkFor21() {
+        if (this.score == 21) {
+            showResult();
+            playerResult.innerText = '21! Blackjack!';
+        }
+    }
+    checkForBusts() {
+        for (let i = 0; i < this.hand.length; i++) {
+            if (this.hand[i] == 11 && this.score > 21) {
+                this.score = this.score - 10;
+            }
+        }
+        if (this.score > 21) {
+            showResult();
+            playerResult.innerText = 'Bust! Dealer wins!';
+        } else {
+            return;
+        }
+    }
+    removeCards() {
+        let player = document.getElementById('playerHand');
+        let cards = player.getElementsByClassName('card');
+        for (let i = cards.length - 1; i >= 0; i--) {
+            let allCards = cards[i];
+            player.removeChild(allCards);
+        }
     }
 }
 
-function updatePlayerTotal(total) {
-    const playerTotal = document.getElementById('playerMoney');
-    playerTotal.textContent = total;
+class Dealer {
+    constructor() {
+        this.score = 0;
+        this.hand = [];
+    }
+    addScore() {
+        this.score = 0;
+        for (let i = 0; i < this.hand.length; i++) {
+            const card = this.hand[i];
+            this.score += card;
+        }
+    }
+    checkFor21() {
+        if (this.score == 21) {
+            dealerHand.firstElementChild.classList.toggle('back');
+            showResult();
+            dealerResult.innerText = 'Dealer drew 21! Blackjack!';
+        }
+    }
+    checkHand() {
+        this.addScore();
+        for (let i = 0; i < this.hand.length; i++) {
+            if (this.hand[i] == 11 && this.score > 21) {
+                this.score -= 10;
+            }
+        }
+        if (this.score > 21) {
+            showResult();
+            dealerResult.innerText = 'Dealer Bust! You win!';
+        }
+        if (this.score < 17) {
+            dealCard(dealerHand, this.hand);
+            this.addScore();
+        }
+        if (this.score > 16 && this.score <= 21) {
+            if (newPlayer.score > newDealer.score) {
+                showResult();
+                dealerResult.innerText = 'You win!';
+                return;
+            } else if (newPlayer.score < newDealer.score) {
+                showResult();
+                dealerResult.innerText = 'Dealer wins!';
+                return;
+            } else if (newPlayer.score == newDealer.score) {
+                showResult();
+                dealerResult.innerText = 'Stand-off!';
+                return;
+            } else {
+                console.log(outcome);
+                return;
+            }
+        }
+    }
+    removeCards() {
+        let dealer = document.getElementById('dealerHand');
+        let cards = dealer.getElementsByClassName('card');
+        for (let i = cards.length - 1; i >= 0; i--) {
+            let allCards = cards[i];
+            dealer.removeChild(allCards);
+        }
+    }
 }
-function updatePlayerBet(total) {
-    const playerBet = document.getElementById('playerBet');
-    playerBet.textContent = total;
-}
-// gamba check end
+
+const newDeck = new Deck;
+newDeck.createDeck();
+newDeck.createDeck();
+newDeck.createDeck();
+newDeck.shuffle();
+
+const newPlayer = new Player;
+const newDealer = new Dealer;
+
