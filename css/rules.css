@@ -3,7 +3,7 @@ body {
   background-color: #1b1919;
   font-family: "Handjet", sans-serif;
   overflow: hidden;
-  background-image: url("./assets/skyline.png");
+  background-image: url("../assets/skyline.png");
   align-items: flex-end;
   background-size: contain;
   background-position: top;
