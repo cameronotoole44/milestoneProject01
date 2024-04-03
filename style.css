@@ -61,11 +61,13 @@ p {
 
 #dealerRow {
   display: flex;
-  align-items: left;
+  justify-content: space-around;
+  flex-direction: column;
 }
 #playerRow {
   display: flex;
-  align-items: flex-end;
+  justify-content: space-around;
+  flex-direction: column;
 }
 
 #board {
