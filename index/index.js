@@ -15,9 +15,26 @@ class Deck {
     createDeck() {
         const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
         const values = ['ace', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'jack', 'queen', 'king'];
+        const pointsMap = {
+            'ace': [1, 11],
+            'two': 2,
+            'three': 3,
+            'four': 4,
+            'five': 5,
+            'six': 6,
+            'seven': 7,
+            'eight': 8,
+            'nine': 9,
+            'ten': 10,
+            'jack': 10,
+            'queen': 10,
+            'king': 10
+        };
+
         for (let value of values) {
             for (let suit of suits) {
-                let points = (value === 'ace') ? 11 : (isNaN(parseInt(value)) ? 10 : parseInt(value));
+                let points = pointsMap[value];
+                // let points = (value === 'ace') ? 11 : (isNaN(parseInt(value)) ? 10 : parseInt(value));
                 this.cards.push(new Card(value, suit, points));
             }
         }
@@ -42,19 +59,18 @@ class Player {
     }
 
     addScore() {
-        this.score = 0;
         let numAces = 0;
+        this.score = 0;
         for (let card of this.hand) {
             if (card.points === 'Ace') {
                 numAces++;
-                this.score += 11;
+                this.score += cardPoints[1];
             } else if (['Jack', 'Queen', 'King'].includes(card.value)) {
                 this.score += 10;
             } else {
                 this.score += card.points;
             }
         }
-
         while (this.score > 21 && numAces > 0) { // aces value switch
             this.score -= 10; // from 11 - 1
             numAces--;
@@ -69,9 +85,9 @@ class Player {
         return false;
     }
 
-    checkForBusts(dealerScore) {
+    checkForBusts(playerScore) {
         if (this.score > 21) {
-            if (dealerScore <= 21) {
+            if (playerScore <= 21) {
                 return true;
             }
         }
@@ -82,27 +98,52 @@ class Player {
 class Dealer extends Player {
     // logic for dealer's turn
     checkHand(dealerHand) {
-        console.log("Hand container in checkHand:", dealerHand);
+        // first card face uup
+        dealCard(this, dealerHand);
+        // second card face down
+        dealCard(this, dealerHand, true);
+
+        // check first two cards are blackjack
+        if (this.checkFor21()) {
+            showResult('Dealer has Blackjack!😱');
+            endGame();
+            return;
+        }
+
+        // deal cards until the score is 17 or higher
         while (this.score < 17) {
-            dealCard(this);
+            dealCard(this, dealerHand);
             this.addScore();
         }
+
+        // reveal second card
+        revealSecondCard(dealerHand);
+
+        // result after the dealer finishes their turn
         if (this.score > 21) {
             showResult('Dealer Bust! You win!🥳');
         } else {
-            this.compareScores();
+            this.compareScores(newPlayer.score);
         }
+        endGame();
     }
-    compareScores() {
-        if (newPlayer.score > this.score) {
+    compareScores(playerScore) {
+        if (playerScore > this.score) {
             showResult('You win!🥳');
-        } else if (newPlayer.score < this.score) {
+        } else if (playerScore < this.score) {
             showResult('Dealer wins!😭');
         } else {
-            showResult('Stand-Off😅');
+            showResult('Stand-off😅');
         }
     }
 }
+
+function revealSecondCard(dealerHand) {
+    const cardContainers = dealerHand.querySelectorAll('.card-container');
+    cardContainers[1].firstElementChild.src = `/cards/${newDealer.hand[1].value}${newDealer.hand[1].suit}.png`;
+    cardContainers[1].firstElementChild.alt = `${newDealer.hand[1].value} of ${newDealer.hand[1].suit}`;
+}
+
 
 // TODO: FIX LOGIC OR FIND OUT WHY ITS BROKEN 70%
 
@@ -155,7 +196,7 @@ function removeCards(playerHand, array) {
     array.splice(0, array.length);
 }
 
-
+// RESULT
 function showResult(result) {
     playerResult.innerText = result;
     playerRow.style.display = 'block';
@@ -189,7 +230,7 @@ bet25Button.addEventListener('click', function () {
 bet100Button.addEventListener('click', function () {
     updateBet(100);
 });
-
+// UPDATE BET
 function updateBet(amount) {
     if (amount <= playerTotal) {
         playerBet += amount;
@@ -205,7 +246,7 @@ function updateBet(amount) {
 const playerRow = document.getElementById('playerRow');
 const closeButton = document.getElementsByClassName('close-button')[0];
 
-
+// RESULT ALERT
 closeButton.onclick = function () {
     playerRow.style.display = 'none';
 }
@@ -214,7 +255,6 @@ window.onclick = function (event) {
         playerRow.style.display = 'none';
     }
 }
-
 
 // reset cards/hand/game
 function resetGame() {
@@ -287,7 +327,8 @@ deal.addEventListener('click', () => {
 hit.addEventListener('click', () => {
     dealCard(newPlayer, playerHand);
     newPlayer.addScore();
-    if (newPlayer.checkForBusts()) {
+    console.log('Player score after hit:', newPlayer.score);
+    if (newPlayer.score > 21) {
         showResult('Player Bust! Dealer wins!😭');
         endGame();
     }
@@ -297,7 +338,7 @@ hit.addEventListener('click', () => {
 stand.addEventListener('click', () => {
     hit.disabled = true;
     stand.disabled = true;
-    dealAsNeeded();
+    newDealer.checkHand(dealerHand);
 });
 
 function dealAsNeeded() {
@@ -305,7 +346,7 @@ function dealAsNeeded() {
         dealCard(newDealer, dealerHand);
         newDealer.addScore();
     }
-    if (newDealer.checkForBusts() || newPlayer.score > newDealer.score) {
+    if (newDealer.checkForBusts(newPlayer.score) || newPlayer.score > newDealer.score) {
         showResult('Player wins!🥳');
     } else if (newPlayer.score < newDealer.score) {
         showResult('Dealer wins!😭');
