@@ -29,8 +29,8 @@
     <!-- gamba -->
     <section id="gambaSection">
         <p>Place bet to start!</p>
-        <div class="playerTotal">Total $ <span id="playerMoney">1000</span></div>
-        <div class="playerBet"> Bet $ <span id="playerBet">0</span></div>
+        <div class="playerTotal">Total: <span id="playerMoney">1000</span></div>
+        <div class="playerBet">Bet: <span id="playerBet">0</span></div>
         <div id="gambaButtons">
             <button id="bet1">$1</button>
             <button id="bet5">$5</button>
@@ -39,34 +39,37 @@
         </div>
     </section>
 
-    <!-- game board -->
 
     <section id="board">
 
         <div id="dealerRow">
-            <h2>Dealer:</h2>
-            <div id="dealerResult"></div>
-            <div id="dealer" class="cardHolder">
-                <div id="dealerHand" class="card">CARDS GO HERE</div>
+            <h3>Dealer:</h3>
+            <div id="dealerHand" class="cardHolder">
+
             </div>
         </div>
         <br>
+
+        <h3>Player:</h3>
         <div id="playerRow">
-            <h2>Player:</h2>
-            <div id="playerResult"></div>
-            <div id="player" class="cardHolder">
-                <div id="playerHand" class="card">CARDS GO HERE</div>
+            <div id="playerResult">
+                <span class="close-button">&times;</span>
+                <p id="resultText"></p>
             </div>
+        </div>
+        <div id="playerHand" class="cardHolder">
+
         </div>
         <br>
     </section>
+
     <section id="playerControls">
         <button id="hit">Hit</button>
         <button id="stand">Stand</button>
         <button id="deal">Deal</button>
     </section>
     <section id="gameOver">
-        <button id="newHand">New Hand</button>
+        <button id="newHand" value="Reset">New Hand</button>
     </section>
 
     <script src="index.js"></script>
