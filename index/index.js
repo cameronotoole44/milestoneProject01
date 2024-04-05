@@ -155,6 +155,13 @@ function removeCards(playerHand, array) {
     array.splice(0, array.length);
 }
 
+
+function showResult(result) {
+    playerResult.innerText = result;
+    playerRow.style.display = 'block';
+    // console.log(message);
+}
+
 // GAMBA SECTION 
 let playerTotal = 1000;
 let playerBet = 0;
@@ -197,50 +204,30 @@ function updateBet(amount) {
 
 const playerRow = document.getElementById('playerRow');
 const closeButton = document.getElementsByClassName('close-button')[0];
-function updatePlayerMoney(playerResult, playerMoney, playerBet) {
-
-    let money = parseInt(playerMoney) || 0;
-    // if (money <= 0) {
-    //     money = 1000; 
-    // } 
-    if (playerResult && typeof playerResult.innerHTML === 'string') {
-        if (playerResult.innerHTML.includes('🤑') || playerResult.innerHTML.includes('🥳')) {
-            money += playerBet * 2;
-        } else if (!playerResult.innerHTML.includes('😭')) {
-            money -= playerBet;
-        }
-    }
 
 
-    // } // TODO: FIX ME
-
-
-    // result response
-    function showResult(result) {
-        playerResult.innerText = result;
-        playerRow.style.display = 'block';
-        // console.log(message);
-    }
-
-    closeButton.onclick = function () {
+closeButton.onclick = function () {
+    playerRow.style.display = 'none';
+}
+window.onclick = function (event) {
+    if (event.target === playerRow) {
         playerRow.style.display = 'none';
-    }
-    window.onclick = function (event) {
-        if (event.target === playerRow) {
-            playerRow.style.display = 'none';
-        }
     }
 }
 
+
 // reset cards/hand/game
 function resetGame() {
-    updatePlayerMoney(playerResult.innerHTML, playerMoney, playerBet);
+    updatePlayerMoney(playerResult, playerMoney, playerBet);
     // clear hands    
     removeCards(playerHand, newPlayer.hand);
     removeCards(dealerHand, newDealer.hand);
     //  reset scores
     newPlayer.score = 0;
     newDealer.score = 0;
+
+    playerBet = 0;
+    playerBetDisplay.textContent = playerBet;
     // enable deal button
     deal.disabled = false;
 
@@ -249,6 +236,22 @@ function resetGame() {
         newDeck.shuffle();
     }
     console.log("Game Reset....");
+}
+
+function updatePlayerMoney(playerResult, playerMoney, playerBet) {
+    let playerTotal = parseInt(playerMoney.textContent) || 0;
+    const resultText = playerResult.innerText;
+    if (resultText && typeof resultText === 'string') {
+        if (resultText.includes('🤑') || resultText.includes('🥳')) {
+            playerTotal += playerBet * 2;
+        } else if (!resultText.includes('😭')) {
+            playerTotal -= playerBet;
+        }
+    }
+
+    // update the player's bet/ total money
+    playerTotalDisplay.textContent = playerTotal;
+    playerBetDisplay.textContent = 0; // reset to 0 after every round
 }
 
 // ui 
@@ -299,7 +302,7 @@ stand.addEventListener('click', () => {
 
 function dealAsNeeded() {
     while (newDealer.score < 17) {
-        dealCard(newDealer, newDealer.hand);
+        dealCard(newDealer, dealerHand);
         newDealer.addScore();
     }
     if (newDealer.checkForBusts() || newPlayer.score > newDealer.score) {
