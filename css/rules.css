@@ -2,10 +2,10 @@
 body {
   background-color: #1b1919;
   font-family: "Handjet", sans-serif;
-  overflow: hidden;
   background-image: url("../assets/skyline.png");
   align-items: flex-end;
-  background-size: contain;
+  background-size: cover;
+  overflow: hidden;
   background-position: top;
   padding: 40px;
   height: 180px;
@@ -41,6 +41,12 @@ h2 {
   font-size: 40px;
 }
 
+p {
+  background-color: #c4c4c4;
+  height: 80px;
+  font-size: 60px;
+}
+
 .blackjack {
   color: #76cbfc;
   background-color: #9494945b;
@@ -61,14 +67,16 @@ h2 {
 
 .rulesList {
   color: #76cbfc;
-  font-size: 40px;
+  font-size: 35px;
   font-weight: SemiBold;
-  padding: 80px;
+  padding: 40px;
 }
 
 .rulesList:hover {
+  background-color: #8b8a8af8;
   border: 2px solid #949494;
   box-shadow: 0 6px 6px #76cbfc;
+  color: #76cbfc;
 }
 
 @keyframes moveBanner {
