@@ -97,13 +97,6 @@ class Player {
         }
     }
 
-    // checks if first two cards equal 21
-    // checkFor21() {
-    //     if (this.hand.length === 2 && this.score === 21) {
-    //         showResult("Player has Blackjack!🤑");
-    //         endGame();
-    //     }
-    // }
     checkFor21() {
         return this.hand.length === 2 && this.score === 21;
     }
