@@ -400,7 +400,7 @@ function endGame() {
     hit.disabled = true;
     stand.disabled = true;
     newHand.disabled = false;
-    updatePlayerMoney(playerResult, playerMoney, playerBet);
+    // updatePlayerMoney(playerResult, playerMoney, playerBet);
 };
 
 newHand.addEventListener("click", () => {
