@@ -4,7 +4,8 @@ class Card {
         this.suit = suit;
         this.points = points;
     }
-}
+};
+
 class Deck {
     constructor() {
         this.cards = [];
@@ -28,7 +29,7 @@ class Deck {
             "queen",
             "king",
         ];
-        const pointsMap = {
+        const pointsMap = {// there has to be a nicer looking way to make this work
             ace: [1, 11],
             two: 2,
             three: 3,
@@ -51,14 +52,14 @@ class Deck {
             }
         }
     }
-    // shuffle
+
     shuffle() {
         for (let i = this.cards.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
         }
     }
-}
+};
 
 class Player {
     constructor() {
@@ -76,7 +77,7 @@ class Player {
         for (let card of this.hand) {
             if (card.points === "ace") {
                 numAces++;
-                totalScore += cardPoints[1];
+                totalScore += card.points[1];
             } else if (["jack", "queen", "king"].includes(card.value)) {
                 totalScore += 10;
             } else {
@@ -102,14 +103,10 @@ class Player {
     }
 
     checkForBusts(playerScore) {
-        if (this.score > 21) {
-            if (playerScore <= 21) {
-                return true;
-            }
-        }
-        return false;
+        return this.score > 21 && playerScore <= 21;
     }
-}
+
+};
 
 class Dealer extends Player {
     checkHand(dealerHand) {
@@ -154,14 +151,14 @@ class Dealer extends Player {
             showResult("Dealer Bust! You win!🥳");
         } else if (playerScore > this.score) {
             showResult("You win!🥳");
+        } else if (playerScore === this.score) {
+            showResult("Stand-off😅");
         } else if (playerScore < this.score) {
             showResult("Dealer wins!😭");
-        } else {
-            showResult("Stand-off😅");
         }
         endGame();
     }
-}
+};
 
 function revealCards(dealerHand) {
     dealerHand.innerHTML = "";
@@ -178,7 +175,7 @@ function revealCards(dealerHand) {
         cardContainer.appendChild(cardImage);
         dealerHand.appendChild(cardContainer);
     }
-}
+};
 
 const newDeck = new Deck();
 const newPlayer = new Player();
@@ -187,7 +184,6 @@ const newDealer = new Dealer();
 const playerHand = document.getElementById("playerHand");
 const dealerHand = document.getElementById("dealerHand");
 const playerMoney = document.getElementById("playerMoney");
-const gameOver = document.getElementById("gameOver");
 const playerResult = document.getElementById("playerResult");
 const dealerResult = document.getElementById("dealerResult");
 const gambaButtons = document.getElementById("gambaButtons");
@@ -214,7 +210,7 @@ function dealCard(person, playerHand, isFaceDown = false) {
     if (!isFaceDown) {
         person.hand.push(randomCard); // add card to hand if it's not face down
     }
-}
+};
 
 // REMOVE CARDS
 function removeCards(playerHand, array) {
@@ -222,13 +218,9 @@ function removeCards(playerHand, array) {
         playerHand.removeChild(cardContainer);
     });
     array.splice(0, array.length);
-}
+};
 
-// round result
-function showResult(result) {
-    playerResult.innerText = result;
-    playerRow.style.display = "block";
-}
+
 
 // GAMBA SECTION
 let playerTotal = 1000;
@@ -268,21 +260,9 @@ function updateBet(amount) {
 
     playerTotalDisplay.textContent = playerTotal;
     playerBetDisplay.textContent = playerBet;
-}
-
-// RESULT ALERT
-const playerRow = document.getElementById("playerRow");
-const closeButton = document.getElementsByClassName("close-button")[0];
-
-closeButton.onclick = function () {
-    playerRow.style.display = "none";
-};
-window.onclick = function (event) {
-    if (event.target === playerRow) {
-        playerRow.style.display = "none";
-    }
 };
 
+// UPDATE PLAYER MONEY 
 function updatePlayerMoney(playerResult, playerMoney, playerBet) {
     let playerTotal = parseInt(playerMoney.textContent) || 0;
 
@@ -297,30 +277,34 @@ function updatePlayerMoney(playerResult, playerMoney, playerBet) {
 
     playerMoney.textContent = playerTotal;
     playerBetDisplay.textContent = 0; // reset to 0 after every round
+};
+
+
+// Function to show result // mobile friendly
+function showResult(result) {
+    playerResult.innerText = result;
+    playerRow.style.display = "block";
 }
 
-function resetGame() {
-    // clear hands
-    removeCards(playerHand, newPlayer.hand);
-    removeCards(dealerHand, newDealer.hand);
-    //  reset scores
-    newPlayer.score = 0;
-    newDealer.score = 0;
+const playerRow = document.getElementById("playerRow");
+const closeButton = document.getElementsByClassName("close-button")[0];
 
-    // update points
-    newPlayer.points = 0;
-    newDealer.points = 0;
+closeButton.addEventListener("click", function () {
+    closeResultPopup();
+});
 
-    playerBet = 0;
-    playerBetDisplay.textContent = playerBet;
-    // enable deal button
-    deal.disabled = false;
 
-    if (newDeck.cards.length <= 12) {
-        newDeck.createDeck();
-        newDeck.shuffle();
+window.addEventListener("click", function (event) {
+    if (event.target === playerRow) {
+        closeResultPopup();
     }
+});
+
+
+function closeResultPopup() {
+    playerRow.style.display = "none";
 }
+
 
 // player controls ui
 const deal = document.getElementById("deal");
@@ -389,14 +373,35 @@ function dealAsNeeded() {
         showResult("Stand-off!😅");
     }
     endGame();
-}
+};
+function resetGame() {
+    // clear hands
+    removeCards(playerHand, newPlayer.hand);
+    removeCards(dealerHand, newDealer.hand);
+    //  reset scores
+    newPlayer.score = 0;
+    newDealer.score = 0;
 
+    // update points
+    newPlayer.points = 0;
+    newDealer.points = 0;
+
+    playerBet = 0;
+    playerBetDisplay.textContent = playerBet;
+    // enable deal button
+    deal.disabled = false;
+
+    if (newDeck.cards.length <= 12) {
+        newDeck.createDeck();
+        newDeck.shuffle();
+    }
+};
 function endGame() {
     hit.disabled = true;
     stand.disabled = true;
     newHand.disabled = false;
     updatePlayerMoney(playerResult, playerMoney, playerBet);
-}
+};
 
 newHand.addEventListener("click", () => {
     resetGame();
