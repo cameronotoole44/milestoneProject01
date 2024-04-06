@@ -13,42 +13,42 @@ class Deck {
         this.shuffle();
     }
     createDeck() {
-        const suits = ["Hearts", "Diamonds", "Clubs", "Spades"];
+        const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
         const values = [
-            "ace",
-            "two",
-            "three",
-            "four",
-            "five",
-            "six",
-            "seven",
-            "eight",
-            "nine",
-            "ten",
-            "jack",
-            "queen",
-            "king",
+            { value: 'ace', points: [1, 11] },
+            { value: 'two', points: 2 },
+            { value: 'three', points: 3 },
+            { value: 'four', points: 4 },
+            { value: 'five', points: 5 },
+            { value: 'six', points: 6 },
+            { value: 'seven', points: 7 },
+            { value: 'eight', points: 8 },
+            { value: 'nine', points: 9 },
+            { value: 'ten', points: 10 },
+            { value: 'jack', points: 10 },
+            { value: 'queen', points: 10 },
+            { value: 'king', points: 10 },
         ];
-        const pointsMap = {// there has to be a nicer looking way to make this work
-            ace: [1, 11],
-            two: 2,
-            three: 3,
-            four: 4,
-            five: 5,
-            six: 6,
-            seven: 7,
-            eight: 8,
-            nine: 9,
-            ten: 10,
-            jack: 10,
-            queen: 10,
-            king: 10,
-        };
+        // const pointsMap = {// there has to be a nicer looking way to make this work
+        //     ace: [1, 11],
+        //     two: 2,
+        //     three: 3,
+        //     four: 4,
+        //     five: 5,
+        //     six: 6,
+        //     seven: 7,
+        //     eight: 8,
+        //     nine: 9,
+        //     ten: 10,
+        //     jack: 10,
+        //     queen: 10,
+        //     king: 10,
+        // };
 
-        for (let value of values) {
-            for (let suit of suits) {
-                let points = pointsMap[value];
-                this.cards.push(new Card(value, suit, points));
+        for (const value of values) {
+            for (const suit of suits) {
+                const points = value.points;
+                this.cards.push(new Card(value.value, suit, points));
             }
         }
     }
@@ -74,28 +74,29 @@ class Player {
     addScore() {
         let numAces = 0;
         let totalScore = 0;
-        for (let card of this.hand) {
-            if (card.points === "ace") {
+
+        for (const card of this.hand) {
+            console.log(`Card: ${card.value} of ${card.suit}, Points: ${card.points}`);
+            if (card.value === 'ace') {
                 numAces++;
                 totalScore += card.points[1];
-            } else if (["jack", "queen", "king"].includes(card.value)) {
+            } else if (['jack', 'queen', 'king'].includes(card.value)) {
                 totalScore += 10;
             } else {
                 totalScore += card.points;
             }
         }
+
+        console.log(`Total score before adjusting for Aces: ${totalScore}`);
+
+
         while (totalScore > 21 && numAces > 0) {
             // aces value switch
             totalScore -= 10; // from 11 - 1
             numAces--;
         }
+        console.log(`Total score before adjusting for Aces: ${totalScore}`);
         this.score = totalScore;
-
-        if (this.score > 21) {
-            showResult("Player Bust! Dealer wins!😭");
-            endGame();
-            hit.disabled = true;
-        }
     }
 
     checkFor21() {
@@ -103,7 +104,7 @@ class Player {
     }
 
     checkForBusts(playerScore) {
-        return this.score > 21 && playerScore <= 21;
+        return this.score > 21;
     }
 
 };
@@ -121,7 +122,7 @@ class Dealer extends Player {
         // Check if the dealer has Blackjack
         if (this.checkFor21()) {
             revealCards(dealerHand);
-            showResult("Dealer has Blackjack!😭");
+            showResult('Dealer has Blackjack!😭');
             endGame();
             return;
         }
@@ -132,12 +133,11 @@ class Dealer extends Player {
             dealCard(this, dealerHand);
             this.addScore();
         }
-
         // reveal second card
         revealCards(dealerHand);
         // result after the dealer finishes their turn
         if (this.score > 21) {
-            showResult("Dealer Bust! You win!🥳");
+            showResult('Dealer Bust! You win!🥳');
         } else {
             this.compareScores(newPlayer.score);
         }
@@ -145,30 +145,38 @@ class Dealer extends Player {
     }
 
     compareScores(playerScore) {
+        console.log(`Player score: ${playerScore}`);
+        console.log(`Dealer score: ${this.score}`);
         if (playerScore > 21) {
-            showResult("Player Bust! Dealer wins!😭");
+            showResult('Player Bust! Dealer wins!😭');
         } else if (this.score > 21) {
-            showResult("Dealer Bust! You win!🥳");
+            showResult('Dealer Bust! You win!🥳');
         } else if (playerScore > this.score) {
-            showResult("You win!🥳");
+            showResult('You win!🥳');
         } else if (playerScore === this.score) {
-            showResult("Stand-off😅");
-        } else if (playerScore < this.score) {
-            showResult("Dealer wins!😭");
+            showResult('Stand-off😅');
+        } else {
+            showResult('Dealer wins!😭');
         }
         endGame();
     }
 };
 
+function showResult(result) {
+    playerResult.innerText = result;
+    playerRow.style.display = 'block';
+}
+
+
 function revealCards(dealerHand) {
-    dealerHand.innerHTML = "";
+    dealerHand.innerHTML = '';
 
     // card containers for each card in the dealer's hand to prevent cards from duplicating in UI
     for (let card of newDealer.hand) {
-        const cardContainer = document.createElement("div");
-        cardContainer.className = "card-container";
+        const cardContainer = document.createElement('div');
+        cardContainer.className = 'card-container';
 
-        const cardImage = document.createElement("img");
+        const cardImage = document.createElement('img');
         cardImage.src = `./cards/${card.value}${card.suit}.png`;
         cardImage.alt = `${card.value} of ${card.suit}`;
 
@@ -177,31 +185,26 @@ function revealCards(dealerHand) {
     }
 };
 
-const newDeck = new Deck();
-const newPlayer = new Player();
-const newDealer = new Dealer();
-
-const playerHand = document.getElementById("playerHand");
-const dealerHand = document.getElementById("dealerHand");
-const playerMoney = document.getElementById("playerMoney");
-const playerResult = document.getElementById("playerResult");
-const dealerResult = document.getElementById("dealerResult");
-const gambaButtons = document.getElementById("gambaButtons");
-const gambaSection = document.getElementById("gambaSection");
-
+// REMOVE CARDS
+function removeCards(playerHand, array) {
+    playerHand.querySelectorAll('.card-container').forEach((cardContainer) => {
+        playerHand.removeChild(cardContainer);
+    });
+    array.splice(0, array.length);
+};
 //  DEAL CARDS AS IMG
 function dealCard(person, playerHand, isFaceDown = false) {
-    const cardContainer = document.createElement("div");
-    cardContainer.className = "card-container";
+    const cardContainer = document.createElement('div');
+    cardContainer.className = 'card-container';
 
     const randomCard = newDeck.cards.pop();
-    const cardImage = document.createElement("img");
+    const cardImage = document.createElement('img');
 
     cardImage.src = isFaceDown
         ? `./cards/backCard.png`
         : `./cards/${randomCard.value}${randomCard.suit}.png`;
     cardImage.alt = isFaceDown
-        ? "Face-down card"
+        ? 'Face-down card'
         : `${randomCard.value} of ${randomCard.suit}`;
     cardContainer.appendChild(cardImage);
 
@@ -212,13 +215,18 @@ function dealCard(person, playerHand, isFaceDown = false) {
     }
 };
 
-// REMOVE CARDS
-function removeCards(playerHand, array) {
-    playerHand.querySelectorAll(".card-container").forEach((cardContainer) => {
-        playerHand.removeChild(cardContainer);
-    });
-    array.splice(0, array.length);
-};
+const newDeck = new Deck();
+const newPlayer = new Player();
+const newDealer = new Dealer();
+
+const playerHand = document.getElementById('playerHand');
+const dealerHand = document.getElementById('dealerHand');
+const playerMoney = document.getElementById('playerMoney');
+const playerResult = document.getElementById('playerResult');
+const dealerResult = document.getElementById('dealerResult');
+const gambaButtons = document.getElementById('gambaButtons');
+const gambaSection = document.getElementById('gambaSection');
+
 
 
 
@@ -226,27 +234,27 @@ function removeCards(playerHand, array) {
 let playerTotal = 1000;
 let playerBet = 0;
 
-const bet1Button = document.getElementById("bet1");
-const bet5Button = document.getElementById("bet5");
-const bet25Button = document.getElementById("bet25");
-const bet100Button = document.getElementById("bet100");
+const bet1Button = document.getElementById('bet1');
+const bet5Button = document.getElementById('bet5');
+const bet25Button = document.getElementById('bet25');
+const bet100Button = document.getElementById('bet100');
 
-const playerTotalDisplay = document.getElementById("playerMoney");
-const playerBetDisplay = document.getElementById("playerBet");
+const playerTotalDisplay = document.getElementById('playerMoney');
+const playerBetDisplay = document.getElementById('playerBet');
 
-bet1Button.addEventListener("click", function () {
+bet1Button.addEventListener('click', function () {
     updateBet(1);
 });
 
-bet5Button.addEventListener("click", function () {
+bet5Button.addEventListener('click', function () {
     updateBet(5);
 });
 
-bet25Button.addEventListener("click", function () {
+bet25Button.addEventListener('click', function () {
     updateBet(25);
 });
 
-bet100Button.addEventListener("click", function () {
+bet100Button.addEventListener('click', function () {
     updateBet(100);
 });
 // UPDATE BET
@@ -255,23 +263,22 @@ function updateBet(amount) {
         playerBet += amount;
         playerTotal -= amount;
     } else {
-        showResult("Not enough money for this bet🚨");
+        showResult('Not enough money for this bet🚨');
     }
 
     playerTotalDisplay.textContent = playerTotal;
     playerBetDisplay.textContent = playerBet;
 };
-
 // UPDATE PLAYER MONEY 
 function updatePlayerMoney(playerResult, playerMoney, playerBet) {
     let playerTotal = parseInt(playerMoney.textContent) || 0;
 
     const resultText = playerResult.innerText;
-    if (resultText && typeof resultText === "string" && resultText.includes("😭")) {
+    if (resultText && typeof resultText === 'string' && resultText.includes('😭')) {
         playerTotal -= playerBet;
     }
 
-    if (resultText && typeof resultText === "string" && (resultText.includes("🤑") || resultText.includes("🥳"))) {
+    if (resultText && typeof resultText === 'string' && (resultText.includes('🤑') || resultText.includes('🥳'))) {
         playerTotal += playerBet * 2;
     }
 
@@ -280,40 +287,37 @@ function updatePlayerMoney(playerResult, playerMoney, playerBet) {
 };
 
 
-// Function to show result // mobile friendly
-function showResult(result) {
-    playerResult.innerText = result;
-    playerRow.style.display = "block";
-}
+// result pop out // mobile event 
+const playerRow = document.getElementById('playerRow');
+const closeButton = document.getElementsByClassName('close-button')[0];
 
-const playerRow = document.getElementById("playerRow");
-const closeButton = document.getElementsByClassName("close-button")[0];
-
-closeButton.addEventListener("click", function () {
+closeButton.addEventListener('touch', function () {
     closeResultPopup();
 });
 
+closeButton.addEventListener('click', function () {
+    closeResultPopup();
+});
 
-window.addEventListener("click", function (event) {
+window.addEventListener('click', function (event) {
     if (event.target === playerRow) {
         closeResultPopup();
     }
 });
 
-
 function closeResultPopup() {
-    playerRow.style.display = "none";
+    playerRow.style.display = 'none';
 }
 
 
 // player controls ui
-const deal = document.getElementById("deal");
-const hit = document.getElementById("hit");
-const stand = document.getElementById("stand");
-const newHand = document.getElementById("newHand");
+const deal = document.getElementById('deal');
+const hit = document.getElementById('hit');
+const stand = document.getElementById('stand');
+const newHand = document.getElementById('newHand');
 
 // event listeners mostly
-deal.addEventListener("click", () => {
+deal.addEventListener('click', () => {
     newDeck.shuffle();
     dealCard(newPlayer, playerHand);
     dealCard(newPlayer, playerHand);
@@ -325,10 +329,10 @@ deal.addEventListener("click", () => {
     stand.disabled = false;
 
     if (newPlayer.checkFor21()) {
-        showResult("Player has Blackjack!🤑");
+        showResult('Player has Blackjack!🤑');
         endGame();
     } else if (newDealer.checkFor21()) {
-        showResult("Dealer has Blackjack!😭");
+        showResult('Dealer has Blackjack!😭');
         endGame();
     } else {
         hit.disabled = false;
@@ -337,21 +341,21 @@ deal.addEventListener("click", () => {
     deal.disabled = true;
 });
 
-hit.addEventListener("click", () => {
+hit.addEventListener('click', () => {
     dealCard(newPlayer, playerHand);
     newPlayer.addScore();
     if (newPlayer.score === 21) {
-        showResult("Player has Blackjack!🤑");
+        showResult('Player has Blackjack!🤑');
         endGame();
         return;
     }
     if (newPlayer.score > 21) {
-        showResult("Player Bust! Dealer wins!😭");
+        showResult('Player Bust! Dealer wins!😭');
         endGame();
     }
 });
 
-stand.addEventListener("click", () => {
+stand.addEventListener('click', () => {
     hit.disabled = true;
     stand.disabled = true;
     newDealer.checkHand(dealerHand);
@@ -366,11 +370,11 @@ function dealAsNeeded() {
         newDealer.checkForBusts(newPlayer.score) ||
         newPlayer.score > newDealer.score
     ) {
-        showResult("Player wins!🥳");
+        showResult('Player wins!🥳');
     } else if (newPlayer.score < newDealer.score) {
-        showResult("Dealer wins!😭");
+        showResult('Dealer wins!😭');
     } else {
-        showResult("Stand-off!😅");
+        showResult('Stand-off!😅');
     }
     endGame();
 };
@@ -400,9 +404,9 @@ function endGame() {
     hit.disabled = true;
     stand.disabled = true;
     newHand.disabled = false;
-    // updatePlayerMoney(playerResult, playerMoney, playerBet);
+
 };
 
-newHand.addEventListener("click", () => {
+newHand.addEventListener('click', () => {
     resetGame();
 });
