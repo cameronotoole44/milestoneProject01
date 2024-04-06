@@ -291,7 +291,9 @@ function updatePlayerMoney(playerResult, playerMoney, playerBet) {
 const playerRow = document.getElementById('playerRow');
 const closeButton = document.getElementsByClassName('close-button')[0];
 
-closeButton.addEventListener('touch', function () {
+closeButton.addEventListener('touchstart', function () {
+});
+closeButton.addEventListener('touchend', function () {
     closeResultPopup();
 });
 
