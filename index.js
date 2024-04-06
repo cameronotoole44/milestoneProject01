@@ -172,7 +172,7 @@ function revealCards(dealerHand) {
         cardContainer.className = "card-container";
 
         const cardImage = document.createElement("img");
-        cardImage.src = `/cards/${card.value}${card.suit}.png`;
+        cardImage.src = `./cards/${card.value}${card.suit}.png`;
         cardImage.alt = `${card.value} of ${card.suit}`;
 
         cardContainer.appendChild(cardImage);
@@ -202,8 +202,8 @@ function dealCard(person, playerHand, isFaceDown = false) {
     const cardImage = document.createElement("img");
 
     cardImage.src = isFaceDown
-        ? `/cards/backCard.png`
-        : `/cards/${randomCard.value}${randomCard.suit}.png`;
+        ? `./cards/backCard.png`
+        : `./cards/${randomCard.value}${randomCard.suit}.png`;
     cardImage.alt = isFaceDown
         ? "Face-down card"
         : `${randomCard.value} of ${randomCard.suit}`;
