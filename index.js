@@ -98,12 +98,14 @@ class Player {
     }
 
     // checks if first two cards equal 21
+    // checkFor21() {
+    //     if (this.hand.length === 2 && this.score === 21) {
+    //         showResult("Player has Blackjack!🤑");
+    //         endGame();
+    //     }
+    // }
     checkFor21() {
-        if (this.hand.length === 2 && this.score === 21) {
-            showResult("Player has Blackjack!🤑");
-            endGame();
-        }
-        return false;
+        return this.hand.length === 2 && this.score === 21;
     }
 
     checkForBusts(playerScore) {
@@ -153,7 +155,11 @@ class Dealer extends Player {
     }
 
     compareScores(playerScore) {
-        if (playerScore > this.score) {
+        if (playerScore > 21) {
+            showResult("Player Bust! Dealer wins!😭");
+        } else if (this.score > 21) {
+            showResult("Dealer Bust! You win!🥳");
+        } else if (playerScore > this.score) {
             showResult("You win!🥳");
         } else if (playerScore < this.score) {
             showResult("Dealer wins!😭");
@@ -165,10 +171,9 @@ class Dealer extends Player {
 }
 
 function revealCards(dealerHand) {
-    // Remove all existing card containers
     dealerHand.innerHTML = "";
 
-    // Create card containers for each card in the dealer's hand
+    // card containers for each card in the dealer's hand to prevent cards from duplicating in UI
     for (let card of newDealer.hand) {
         const cardContainer = document.createElement("div");
         cardContainer.className = "card-container";
@@ -226,7 +231,7 @@ function removeCards(playerHand, array) {
     array.splice(0, array.length);
 }
 
-// RESULT
+// round result
 function showResult(result) {
     playerResult.innerText = result;
     playerRow.style.display = "block";
