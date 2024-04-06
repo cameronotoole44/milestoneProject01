@@ -4,7 +4,7 @@ class Card {
         this.suit = suit;
         this.points = points;
     }
-};
+}
 
 class Deck {
     constructor() {
@@ -29,21 +29,6 @@ class Deck {
             { value: 'queen', points: 10 },
             { value: 'king', points: 10 },
         ];
-        // const pointsMap = {// there has to be a nicer looking way to make this work
-        //     ace: [1, 11],
-        //     two: 2,
-        //     three: 3,
-        //     four: 4,
-        //     five: 5,
-        //     six: 6,
-        //     seven: 7,
-        //     eight: 8,
-        //     nine: 9,
-        //     ten: 10,
-        //     jack: 10,
-        //     queen: 10,
-        //     king: 10,
-        // };
 
         for (const value of values) {
             for (const suit of suits) {
@@ -59,7 +44,7 @@ class Deck {
             [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
         }
     }
-};
+}
 
 class Player {
     constructor() {
@@ -107,7 +92,7 @@ class Player {
         return this.score > 21;
     }
 
-};
+}
 
 class Dealer extends Player {
     checkHand(dealerHand) {
@@ -160,13 +145,12 @@ class Dealer extends Player {
         }
         endGame();
     }
-};
+}
 
 function showResult(result) {
     playerResult.innerText = result;
     playerRow.style.display = 'block';
 }
-
 
 function revealCards(dealerHand) {
     dealerHand.innerHTML = '';
@@ -183,7 +167,7 @@ function revealCards(dealerHand) {
         cardContainer.appendChild(cardImage);
         dealerHand.appendChild(cardContainer);
     }
-};
+}
 
 // REMOVE CARDS
 function removeCards(playerHand, array) {
@@ -191,7 +175,7 @@ function removeCards(playerHand, array) {
         playerHand.removeChild(cardContainer);
     });
     array.splice(0, array.length);
-};
+}
 //  DEAL CARDS AS IMG
 function dealCard(person, playerHand, isFaceDown = false) {
     const cardContainer = document.createElement('div');
@@ -213,7 +197,7 @@ function dealCard(person, playerHand, isFaceDown = false) {
     if (!isFaceDown) {
         person.hand.push(randomCard); // add card to hand if it's not face down
     }
-};
+}
 
 const newDeck = new Deck();
 const newPlayer = new Player();
@@ -226,9 +210,6 @@ const playerResult = document.getElementById('playerResult');
 const dealerResult = document.getElementById('dealerResult');
 const gambaButtons = document.getElementById('gambaButtons');
 const gambaSection = document.getElementById('gambaSection');
-
-
-
 
 // GAMBA SECTION
 let playerTotal = 1000;
@@ -244,19 +225,19 @@ const playerBetDisplay = document.getElementById('playerBet');
 
 bet1Button.addEventListener('click', function () {
     updateBet(1);
-});
+})
 
 bet5Button.addEventListener('click', function () {
     updateBet(5);
-});
+})
 
 bet25Button.addEventListener('click', function () {
     updateBet(25);
-});
+})
 
 bet100Button.addEventListener('click', function () {
     updateBet(100);
-});
+})
 // UPDATE BET
 function updateBet(amount) {
     if (amount <= playerTotal + playerBet) {
@@ -268,7 +249,7 @@ function updateBet(amount) {
 
     playerTotalDisplay.textContent = playerTotal;
     playerBetDisplay.textContent = playerBet;
-};
+}
 // UPDATE PLAYER MONEY 
 function updatePlayerMoney(playerResult, playerMoney, playerBet) {
     let playerTotal = parseInt(playerMoney.textContent) || 0;
@@ -284,33 +265,26 @@ function updatePlayerMoney(playerResult, playerMoney, playerBet) {
 
     playerMoney.textContent = playerTotal;
     playerBetDisplay.textContent = 0; // reset to 0 after every round
-};
+}
 
 
 // result pop out // mobile event 
 const playerRow = document.getElementById('playerRow');
 const closeButton = document.getElementsByClassName('close-button')[0];
 
-closeButton.addEventListener('touchstart', function () {
-});
-closeButton.addEventListener('touchend', function () {
-    closeResultPopup();
-});
-
 closeButton.addEventListener('click', function () {
     closeResultPopup();
-});
+})
 
 window.addEventListener('click', function (event) {
     if (event.target === playerRow) {
         closeResultPopup();
     }
-});
+})
 
 function closeResultPopup() {
     playerRow.style.display = 'none';
 }
-
 
 // player controls ui
 const deal = document.getElementById('deal');
@@ -341,7 +315,7 @@ deal.addEventListener('click', () => {
         stand.disabled = false;
     }
     deal.disabled = true;
-});
+})
 
 hit.addEventListener('click', () => {
     dealCard(newPlayer, playerHand);
@@ -355,13 +329,13 @@ hit.addEventListener('click', () => {
         showResult('Player Bust! Dealer wins!😭');
         endGame();
     }
-});
+})
 
 stand.addEventListener('click', () => {
     hit.disabled = true;
     stand.disabled = true;
     newDealer.checkHand(dealerHand);
-});
+})
 
 function dealAsNeeded() {
     while (newDealer.score < 17) {
@@ -379,7 +353,7 @@ function dealAsNeeded() {
         showResult('Stand-off!😅');
     }
     endGame();
-};
+}
 function resetGame() {
     // clear hands
     removeCards(playerHand, newPlayer.hand);
@@ -401,14 +375,14 @@ function resetGame() {
         newDeck.createDeck();
         newDeck.shuffle();
     }
-};
+}
 function endGame() {
     hit.disabled = true;
     stand.disabled = true;
     newHand.disabled = false;
 
-};
+}
 
 newHand.addEventListener('click', () => {
     resetGame();
-});
+})
