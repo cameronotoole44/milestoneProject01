@@ -13,9 +13,9 @@ I also ran into the issue of the Dealer's cards being duplicated in the UI in ce
 
 ## Current WIP
 
--fix bets not updating after each hand
--total player money going up on a winning hand
--have the logic be more accurate given the complexity*
+- fix bets not updating after each hand
+- total player money going up on a winning hand
+- have the logic be more accurate given the complexity*
 
 ### Eventually
 
