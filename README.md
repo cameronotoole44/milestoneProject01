@@ -9,7 +9,15 @@ The goal of this project was to create a browser game, using best practices and 
 I chose to create a game of Blackjack, a classic gamba game. Player vs. Dealer. Closest to 21 without going over wins.
 Overall I had fun working on this, I learned a few new things and picked up on certain creational patterns which is pretty cool.  
 The switching of the Ace values stumped me for a minute, but with enough research and patience, I'm proud I figured that one out.
-I also ran into the issue of the Dealer's cards being duplicated in the UI in certain cases. I ended up creating individual card containers for the to match the number of cards in the Dealer's hand.
+I also ran into the issue of the Dealer's cards being duplicated in the UI in certain cases. I ended up creating individual card containers for them to match the number of cards in the Dealer's hand.
+
+## Current WIP
+
+-fix bets not updating after each hand
+-total player money going up on a winning hand
+-have the logic be more accurate given the complexity*
+
+### Eventually
 
 I plan on adding another player besides the 'Dealer'.  
  _if I'm feeling wild_ an 'Insurance', 'Split', 'Double' feature at some point.
