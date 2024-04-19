@@ -1,78 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blackjack</title>
-    <link rel="icon" href="assets/redChip-Icon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Handjet:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/redChip-Icon.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Handjet:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
 
-</head>
-
-<body>
-
+  <body>
     <header>
-        <nav class="settings-container">
-            <div class="settings">
-                <a href="rules/rules.html">RULES</a>
-                <a href="rules/cardValues.html">CARD VALUES</a>
-            </div>
-        </nav>
-
-        <div class="main-title">
-            <h1>BLACKJACK</h1>
+      <nav class="settings-container">
+        <div class="settings">
+          <a href="rules/rules.html">RULES</a>
+          <a href="rules/cardValues.html">CARD VALUES</a>
         </div>
+      </nav>
+
+      <div class="main-title">
+        <h1>BLACKJACK</h1>
+      </div>
     </header>
 
     <!-- gamba -->
     <section id="gambaSection">
-        <p>Place bet and click 'Deal' to start!</p>
-        <div class="playerTotal">Total: <span id="playerMoney">1000</span></div>
-        <div class="playerBet">Bet: <span id="playerBet">0</span></div>
-        <div id="gambaButtons">
-            <button id="bet1" class="bet-button">$1</button>
-            <button id="bet5" class="bet-button">$5</button>
-            <button id="bet25" class="bet-button">$25</button>
-            <button id="bet100" class="bet-button">$100</button>
-        </div>
+      <p>Place bet and click 'Deal' to start!</p>
+      <div class="playerTotal">Total: <span id="playerMoney">1000</span></div>
+      <div class="playerBet">Bet: <span id="playerBet">0</span></div>
+      <div id="gambaButtons">
+        <button id="bet1" class="bet-button">$1</button>
+        <button id="bet5" class="bet-button">$5</button>
+        <button id="bet25" class="bet-button">$25</button>
+        <button id="bet100" class="bet-button">$100</button>
+      </div>
     </section>
-
-
-    <section id="board">
-
-        <div id="dealerRow">
-            <h3>Dealer:</h3>
-            <div id="dealerHand" class="cardHolder">
-
-            </div>
-        </div>
-        <br>
-
-        <h3>Player:</h3>
-        <div id="playerRow">
-            <div id="playerResult">
-                <span class="close-button">&times;</span>
-                <p id="resultText"></p>
-            </div>
-        </div>
-        <div id="playerHand" class="cardHolder">
-
-        </div>
-        <br>
-    </section>
-
     <section id="playerControls">
-        <button id="hit">Hit</button>
-        <button id="stand">Stand</button>
-        <button id="deal">Deal</button>
+      <button id="hit">Hit</button>
+      <button id="stand">Stand</button>
+      <button id="deal">Deal</button>
     </section>
     <section id="gameOver">
-        <button id="newHand" value="Reset">New Hand</button>
+      <button id="newHand" value="Reset">New Hand</button>
+    </section>
+    <section id="board">
+      <div id="dealerRow">
+        <h3>Dealer:</h3>
+        <div id="dealerHand" class="cardHolder"></div>
+      </div>
+      <br />
+
+      <h3>Player:</h3>
+      <div id="playerRow">
+        <div id="playerResult">
+          <span class="close-button">&times;</span>
+          <p id="resultText"></p>
+        </div>
+      </div>
+      <div id="playerHand" class="cardHolder"></div>
+      <br />
     </section>
 
     <script src="index.js"></script>
-</body>
-
+  </body>
 </html>

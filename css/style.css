@@ -99,7 +99,7 @@ p {
   background-size: fixed;
   border: 4px solid #726f6f;
   height: 500px;
-  margin: 60px;
+  margin: 20px;
   padding: 40px;
 }
 #gambaSection {
@@ -114,6 +114,7 @@ p {
 #playerControls {
   display: flex;
   justify-content: space-around;
+  margin-bottom: 20px;
 }
 #blackJack {
   display: flex;
