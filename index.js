@@ -61,7 +61,7 @@ class Player {
         let totalScore = 0;
 
         for (const card of this.hand) {
-            console.log(`Card: ${card.value} of ${card.suit}, Points: ${card.points}`);
+            // console.log(`Card: ${card.value} of ${card.suit}, Points: ${card.points}`);
             if (card.value === 'ace') {
                 numAces++;
                 totalScore += card.points[1];
@@ -72,7 +72,7 @@ class Player {
             }
         }
 
-        console.log(`Total score before adjusting for Aces: ${totalScore}`);
+        // console.log(`Total score before adjusting for Aces: ${totalScore}`);
 
 
         while (totalScore > 21 && numAces > 0) {
@@ -130,8 +130,8 @@ class Dealer extends Player {
     }
 
     compareScores(playerScore) {
-        console.log(`Player score: ${playerScore}`);
-        console.log(`Dealer score: ${this.score}`);
+        // console.log(`Player score: ${playerScore}`);
+        // console.log(`Dealer score: ${this.score}`);
         if (playerScore > 21) {
             showResult('Player Bust! Dealer wins!😭');
         } else if (this.score > 21) {
@@ -243,16 +243,22 @@ function updateBet(amount) {
     if (amount <= playerTotal + playerBet) {
         playerBet += amount;
         playerTotal -= amount;
+        playerTotalDisplay.textContent = playerTotal;
+        playerBetDisplay.textContent = playerBet;
+        console.log("player placed bet:", playerBet);
     } else {
         showResult('Not enough money for this bet🚨');
     }
 
-    playerTotalDisplay.textContent = playerTotal;
-    playerBetDisplay.textContent = playerBet;
 }
 // UPDATE PLAYER MONEY 
-function updatePlayerMoney(playerResult, playerMoney, playerBet) {
-    let playerTotal = parseInt(playerMoney.textContent) || 0;
+function updatePlayerMoney(playerResult, playerMoneyElement, playerBet) {
+    console.log("Updating player's money...");
+    console.log("Player result:", playerResult.innerText);
+    console.log("Player money before update:", playerMoneyElement.textContent);
+    console.log("Player bet:", playerBet);
+
+    let playerTotal = parseInt(playerMoneyElement.textContent) || 0;
 
     const resultText = playerResult.innerText;
     if (resultText && typeof resultText === 'string' && resultText.includes('😭')) {
@@ -261,10 +267,13 @@ function updatePlayerMoney(playerResult, playerMoney, playerBet) {
 
     if (resultText && typeof resultText === 'string' && (resultText.includes('🤑') || resultText.includes('🥳'))) {
         playerTotal += playerBet * 2;
+
     }
 
-    playerMoney.textContent = playerTotal;
+    playerMoneyElement.textContent = playerTotal;
     playerBetDisplay.textContent = 0; // reset to 0 after every round
+
+    console.log("Player money after update:", playerMoneyElement.textContent);
 }
 
 
@@ -354,6 +363,7 @@ function dealAsNeeded() {
     }
     endGame();
 }
+
 function resetGame() {
     // clear hands
     removeCards(playerHand, newPlayer.hand);
@@ -361,15 +371,20 @@ function resetGame() {
     //  reset scores
     newPlayer.score = 0;
     newDealer.score = 0;
-
-    // update points
     newPlayer.points = 0;
     newDealer.points = 0;
+
+    if (playerResult.innerText.includes('🥳')) {
+        playerTotal += playerBet * 2;
+    }
+
+    updatePlayerMoney(playerResult, playerMoney, playerBet);
 
     playerBet = 0;
     playerBetDisplay.textContent = playerBet;
     // enable deal button
     deal.disabled = false;
+
 
     if (newDeck.cards.length <= 12) {
         newDeck.createDeck();
