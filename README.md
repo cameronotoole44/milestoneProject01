@@ -12,16 +12,8 @@ The switching of the Ace values stumped me for a minute, but with enough researc
 I also ran into the issue of the Dealer's cards being duplicated in the UI in certain cases. I ended up creating individual card containers for them to match the number of cards in the Dealer's hand.
 
 ## Current WIP
-
-~~- fix bets not updating after each hand~~
-~~- total player money going up on a winning hand~~
-
-- have the logic be more accurate given the complexity\*
-
-### Eventually
-
-I plan on adding another player besides the 'Dealer'.  
- _if I'm feeling wild_ an 'Insurance', 'Split', 'Double' feature at some point.
+An 'Insurance', 'Split', and 'Double' feature
+Adding another player besides the 'Dealer' at some point.
 
 ### Functionality:
 
