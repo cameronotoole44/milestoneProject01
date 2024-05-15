@@ -12,6 +12,7 @@ class Deck {
         this.createDeck();
         this.shuffle();
     }
+
     createDeck() {
         const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
         const values = [
@@ -51,6 +52,7 @@ class Player {
         this.score = 0;
         this.hand = [];
     }
+
     addCardToHand(card) {
         this.hand.push(card);
         this.addScore();
@@ -61,7 +63,6 @@ class Player {
         let totalScore = 0;
 
         for (const card of this.hand) {
-            // console.log(`Card: ${card.value} of ${card.suit}, Points: ${card.points}`);
             if (card.value === 'ace') {
                 numAces++;
                 totalScore += card.points[1];
@@ -72,15 +73,11 @@ class Player {
             }
         }
 
-        // console.log(`Total score before adjusting for Aces: ${totalScore}`);
-
-
         while (totalScore > 21 && numAces > 0) {
-            // aces value switch
-            totalScore -= 10; // from 11 - 1
+            totalScore -= 10; // from 11 to 1
             numAces--;
         }
-        console.log(`Total score before adjusting for Aces: ${totalScore}`);
+
         this.score = totalScore;
     }
 
@@ -88,40 +85,27 @@ class Player {
         return this.hand.length === 2 && this.score === 21;
     }
 
-    checkForBusts(playerScore) {
+    checkForBust() {
         return this.score > 21;
     }
-
 }
 
 class Dealer extends Player {
     checkHand(dealerHand) {
-        if (this.hand.length === 2) {
-            // reveal the second card
-            revealCards(dealerHand);
-        } else if (this.hand.length > 2) {
-            // any cards beyond the first two, deal them face up
-            dealCard(this, dealerHand);
-        }
+        revealCards(dealerHand);
 
-        // Check if the dealer has Blackjack
         if (this.checkFor21()) {
-            revealCards(dealerHand);
             showResult('Dealer has Blackjack!😭');
             endGame();
             return;
         }
 
-        // deal cards until the score is 17 or higher
         while (this.score < 17) {
-            revealCards(dealerHand);
             dealCard(this, dealerHand);
             this.addScore();
         }
-        // reveal second card
-        revealCards(dealerHand);
-        // result after the dealer finishes their turn
-        if (this.score > 21) {
+
+        if (this.checkForBust()) {
             showResult('Dealer Bust! You win!🥳');
         } else {
             this.compareScores(newPlayer.score);
@@ -130,8 +114,6 @@ class Dealer extends Player {
     }
 
     compareScores(playerScore) {
-        // console.log(`Player score: ${playerScore}`);
-        // console.log(`Dealer score: ${this.score}`);
         if (playerScore > 21) {
             showResult('Player Bust! Dealer wins!😭');
         } else if (this.score > 21) {
@@ -155,7 +137,6 @@ function showResult(result) {
 function revealCards(dealerHand) {
     dealerHand.innerHTML = '';
 
-    // card containers for each card in the dealer's hand to prevent cards from duplicating in UI
     for (let card of newDealer.hand) {
         const cardContainer = document.createElement('div');
         cardContainer.className = 'card-container';
@@ -169,15 +150,14 @@ function revealCards(dealerHand) {
     }
 }
 
-// REMOVE CARDS
-function removeCards(playerHand, array) {
-    playerHand.querySelectorAll('.card-container').forEach((cardContainer) => {
-        playerHand.removeChild(cardContainer);
+function removeCards(handElement, array) {
+    handElement.querySelectorAll('.card-container').forEach((cardContainer) => {
+        handElement.removeChild(cardContainer);
     });
     array.splice(0, array.length);
 }
-//  DEAL CARDS AS IMG
-function dealCard(person, playerHand, isFaceDown = false) {
+
+function dealCard(person, handElement, isFaceDown = false) {
     const cardContainer = document.createElement('div');
     cardContainer.className = 'card-container';
 
@@ -192,10 +172,11 @@ function dealCard(person, playerHand, isFaceDown = false) {
         : `${randomCard.value} of ${randomCard.suit}`;
     cardContainer.appendChild(cardImage);
 
-    playerHand.appendChild(cardContainer);
+    handElement.appendChild(cardContainer);
 
     if (!isFaceDown) {
-        person.hand.push(randomCard); // add card to hand if it's not face down
+        person.hand.push(randomCard);
+        person.addScore();
     }
 }
 
@@ -205,13 +186,12 @@ const newDealer = new Dealer();
 
 const playerHand = document.getElementById('playerHand');
 const dealerHand = document.getElementById('dealerHand');
-const playerMoney = document.getElementById('playerMoney');
+const playerMoneyElement = document.getElementById('playerMoney');
 const playerResult = document.getElementById('playerResult');
 const dealerResult = document.getElementById('dealerResult');
 const gambaButtons = document.getElementById('gambaButtons');
 const gambaSection = document.getElementById('gambaSection');
 
-// GAMBA SECTION
 let playerTotal = 1000;
 let playerBet = 0;
 
@@ -223,95 +203,96 @@ const bet100Button = document.getElementById('bet100');
 const playerTotalDisplay = document.getElementById('playerMoney');
 const playerBetDisplay = document.getElementById('playerBet');
 
-bet1Button.addEventListener('click', function () {
-    updateBet(1);
-})
+bet1Button.addEventListener('click', () => updateBet(1));
+bet5Button.addEventListener('click', () => updateBet(5));
+bet25Button.addEventListener('click', () => updateBet(25));
+bet100Button.addEventListener('click', () => updateBet(100));
 
-bet5Button.addEventListener('click', function () {
-    updateBet(5);
-})
-
-bet25Button.addEventListener('click', function () {
-    updateBet(25);
-})
-
-bet100Button.addEventListener('click', function () {
-    updateBet(100);
-})
-// UPDATE BET
 function updateBet(amount) {
-    if (amount <= playerTotal + playerBet) {
+    if (amount <= playerTotal) {
         playerBet += amount;
         playerTotal -= amount;
         playerTotalDisplay.textContent = playerTotal;
         playerBetDisplay.textContent = playerBet;
-        console.log("player placed bet:", playerBet);
+        console.log("Player placed bet:", playerBet);
     } else {
         showResult('Not enough money for this bet🚨');
     }
-
 }
-// UPDATE PLAYER MONEY 
-function updatePlayerMoney(playerResult, playerMoneyElement, playerBet) {
+
+function updatePlayerMoney() {
     console.log("Updating player's money...");
     console.log("Player result:", playerResult.innerText);
-    console.log("Player money before update:", playerMoneyElement.textContent);
+    console.log("Player money before update:", playerTotal);
     console.log("Player bet:", playerBet);
 
-    let playerTotal = parseInt(playerMoneyElement.textContent) || 0;
-
     const resultText = playerResult.innerText;
-    if (resultText && typeof resultText === 'string' && resultText.includes('😭')) {
-        playerTotal -= playerBet;
+    if (resultText.includes('😭')) {
+        // Player loses bet
+    } else if (resultText.includes('🤑') || resultText.includes('🥳')) {
+        playerTotal += playerBet * 2; // Player wins bet
     }
 
-    if (resultText && typeof resultText === 'string' && (resultText.includes('🤑') || resultText.includes('🥳'))) {
-        playerTotal += playerBet * 2;
+    playerTotalDisplay.textContent = playerTotal;
+    playerBet = 0; // Reset bet after the round
+    playerBetDisplay.textContent = playerBet;
 
-    }
-
-    playerMoneyElement.textContent = playerTotal;
-    playerBetDisplay.textContent = 0; // reset to 0 after every round
-
-    console.log("Player money after update:", playerMoneyElement.textContent);
+    console.log("Player money after update:", playerTotal);
 }
 
+function resetGame() {
+    removeCards(playerHand, newPlayer.hand);
+    removeCards(dealerHand, newDealer.hand);
 
-// result pop out // mobile event 
+    newPlayer.score = 0;
+    newDealer.score = 0;
+
+    updatePlayerMoney();
+
+    deal.disabled = false;
+
+    if (newDeck.cards.length <= 12) {
+        newDeck.createDeck();
+        newDeck.shuffle();
+    }
+}
+
+function endGame() {
+    hit.disabled = true;
+    stand.disabled = true;
+    newHand.disabled = false;
+}
+
 const playerRow = document.getElementById('playerRow');
 const closeButton = document.getElementsByClassName('close-button')[0];
 
-closeButton.addEventListener('click', function () {
-    closeResultPopup();
-})
-
-window.addEventListener('click', function (event) {
+closeButton.addEventListener('click', closeResultPopup);
+window.addEventListener('click', (event) => {
     if (event.target === playerRow) {
         closeResultPopup();
     }
-})
+});
 
 function closeResultPopup() {
     playerRow.style.display = 'none';
 }
 
-// player controls ui
 const deal = document.getElementById('deal');
 const hit = document.getElementById('hit');
 const stand = document.getElementById('stand');
 const newHand = document.getElementById('newHand');
 
-// event listeners mostly
 deal.addEventListener('click', () => {
     newDeck.shuffle();
     dealCard(newPlayer, playerHand);
     dealCard(newPlayer, playerHand);
-    dealCard(newDealer, dealerHand, true); // dealer card, face down
-    dealCard(newDealer, dealerHand); // dealer card, face up
+    dealCard(newDealer, dealerHand, true);
+    dealCard(newDealer, dealerHand);
 
     deal.disabled = true;
     hit.disabled = false;
     stand.disabled = false;
+    newHand.disabled = true;
 
     if (newPlayer.checkFor21()) {
         showResult('Player has Blackjack!🤑');
@@ -319,85 +300,26 @@ deal.addEventListener('click', () => {
     } else if (newDealer.checkFor21()) {
         showResult('Dealer has Blackjack!😭');
         endGame();
-    } else {
-        hit.disabled = false;
-        stand.disabled = false;
     }
-    deal.disabled = true;
-})
+});
 
 hit.addEventListener('click', () => {
     dealCard(newPlayer, playerHand);
-    newPlayer.addScore();
-    if (newPlayer.score === 21) {
-        showResult('Player has Blackjack!🤑');
-        endGame();
-        return;
-    }
-    if (newPlayer.score > 21) {
+    if (newPlayer.checkForBust()) {
         showResult('Player Bust! Dealer wins!😭');
         endGame();
+    } else if (newPlayer.score === 21) {
+        showResult('Player has Blackjack!🤑');
+        endGame();
     }
-})
+});
 
 stand.addEventListener('click', () => {
     hit.disabled = true;
     stand.disabled = true;
     newDealer.checkHand(dealerHand);
-})
+});
 
-function dealAsNeeded() {
-    while (newDealer.score < 17) {
-        dealCard(newDealer, dealerHand);
-        newDealer.addScore();
-    }
-    if (
-        newDealer.checkForBusts(newPlayer.score) ||
-        newPlayer.score > newDealer.score
-    ) {
-        showResult('Player wins!🥳');
-    } else if (newPlayer.score < newDealer.score) {
-        showResult('Dealer wins!😭');
-    } else {
-        showResult('Stand-off!😅');
-    }
-    endGame();
-}
-
-function resetGame() {
-    // clear hands
-    removeCards(playerHand, newPlayer.hand);
-    removeCards(dealerHand, newDealer.hand);
-    //  reset scores
-    newPlayer.score = 0;
-    newDealer.score = 0;
-    newPlayer.points = 0;
-    newDealer.points = 0;
-
-    if (playerResult.innerText.includes('🥳')) {
-        playerTotal += playerBet * 2;
-    }
-
-    updatePlayerMoney(playerResult, playerMoney, playerBet);
-
-    playerBet = 0;
-    playerBetDisplay.textContent = playerBet;
-    // enable deal button
-    deal.disabled = false;
+newHand.addEventListener('click', resetGame);
 
 
-    if (newDeck.cards.length <= 12) {
-        newDeck.createDeck();
-        newDeck.shuffle();
-    }
-}
-function endGame() {
-    hit.disabled = true;
-    stand.disabled = true;
-    newHand.disabled = false;
-
-}
-
-newHand.addEventListener('click', () => {
-    resetGame();
-})
