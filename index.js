@@ -322,4 +322,59 @@ stand.addEventListener('click', () => {
 
 newHand.addEventListener('click', resetGame);
 
+// Mobile-friendly touch event listeners
+function addMobileEventListeners(button, callback) {
+    button.addEventListener('click', callback);
+    button.addEventListener('touchstart', callback, { passive: true });
+}
+
+addMobileEventListeners(bet1Button, () => updateBet(1));
+addMobileEventListeners(bet5Button, () => updateBet(5));
+addMobileEventListeners(bet25Button, () => updateBet(25));
+addMobileEventListeners(bet100Button, () => updateBet(100));
+addMobileEventListeners(deal, () => {
+    newDeck.shuffle();
+    dealCard(newPlayer, playerHand);
+    dealCard(newPlayer, playerHand);
+    dealCard(newDealer, dealerHand, true);
+    dealCard(newDealer, dealerHand);
+
+    deal.disabled = true;
+    hit.disabled = false;
+    stand.disabled = false;
+    newHand.disabled = true;
+
+    if (newPlayer.checkFor21()) {
+        showResult('Player has Blackjack!🤑');
+        endGame();
+    } else if (newDealer.checkFor21()) {
+        showResult('Dealer has Blackjack!😭');
+        endGame();
+    }
+});
+addMobileEventListeners(hit, () => {
+    dealCard(newPlayer, playerHand);
+    if (newPlayer.checkForBust()) {
+        showResult('Player Bust! Dealer wins!😭');
+        endGame();
+    } else if (newPlayer.score === 21) {
+        showResult('Player has Blackjack!🤑');
+        endGame();
+    }
+});
+addMobileEventListeners(stand, () => {
+    hit.disabled = true;
+    stand.disabled = true;
+    newDealer.checkHand(dealerHand);
+});
+addMobileEventListeners(newHand, resetGame);
+
+addMobileEventListeners(closeButton, closeResultPopup);
+window.addEventListener('touchstart', (event) => {
+    if (event.target === playerRow) {
+        closeResultPopup();
+    }
+}, { passive: true });
+
+
 
