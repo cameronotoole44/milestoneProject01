@@ -220,6 +220,13 @@ function updateBet(amount) {
     }
 }
 
+function removeBetEventListeners() {
+    bet1Button.removeEventListener('click', handleBet1Click);
+    bet5Button.removeEventListener('click', handleBet5Click);
+    bet25Button.removeEventListener('click', handleBet25Click);
+    bet100Button.removeEventListener('click', handleBet100Click);
+}
+
 function updatePlayerMoney() {
     console.log("Updating player's money...");
     console.log("Player result:", playerResult.innerText);
@@ -322,7 +329,6 @@ stand.addEventListener('click', () => {
 
 newHand.addEventListener('click', resetGame);
 
-// Mobile-friendly touch event listeners
 function addMobileEventListeners(button, callback) {
     button.addEventListener('click', callback);
     button.addEventListener('touchstart', callback, { passive: true });
@@ -375,6 +381,3 @@ window.addEventListener('touchstart', (event) => {
         closeResultPopup();
     }
 }, { passive: true });
-
-
-
