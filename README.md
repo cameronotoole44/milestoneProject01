@@ -15,6 +15,8 @@ I also ran into the issue of the Dealer's cards being duplicated in the UI in ce
 An 'Insurance', 'Split', and 'Double' feature
 Adding another player besides the 'Dealer' at some point.
 
+**re doing this whole project because I know a lot more now lol**
+
 ### Functionality:
 
 *Place bet by clicking bet buttons $1, $5, $25, $100. The player starts with $1000  
