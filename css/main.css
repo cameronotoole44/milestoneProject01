@@ -1,3 +1,7 @@
+/* buttons */
+/* deal */
+/* mobile buttons */
+/* Buttons */
 body {
   background-color: #141414;
   color: #fff;
@@ -5,7 +9,11 @@ body {
   margin: 0;
   padding: 0;
 }
-header,
+
+header {
+  padding: 10px;
+}
+
 section {
   padding: 10px;
 }
@@ -24,6 +32,7 @@ h1:hover {
   box-shadow: 0 4px 0 #fcfcfc;
   transition: color 2s;
 }
+
 h2 {
   color: #c70808;
   font-size: 5vw;
@@ -46,6 +55,7 @@ p {
   font-size: 3vw;
   padding: 0px 100px 0px 0px;
 }
+
 .settings a {
   text-decoration: none;
   color: #444444;
@@ -56,10 +66,10 @@ p {
   color: #fbff00;
   box-shadow: 0 0px 4px #fbff00;
 }
+
 .main-title {
   align-items: flex-end;
   background-image: url("../assets/skyline.png");
-  /* fix the background img ! */
   background-size: contain;
   background-position: top;
   color: #fff;
@@ -74,8 +84,11 @@ p {
   font-size: 28px;
   font-weight: bold;
 }
-
-.close-button:hover,
+.close-button:hover {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
 .close-button:focus {
   color: black;
   text-decoration: none;
@@ -101,7 +114,7 @@ p {
   transform: translate(-50%, -50%);
   width: 80%;
   height: auto;
-  background-color: #ff449baf;
+  background-color: rgba(255, 68, 155, 0.6862745098);
   padding: 20px;
 }
 
@@ -113,9 +126,11 @@ p {
   margin: 10px;
   padding: 20px;
 }
+
 #gambaSection {
   padding: 10px;
 }
+
 #gambaButtons {
   display: flex;
   flex-direction: row;
@@ -123,11 +138,13 @@ p {
   align-items: center;
   flex-wrap: wrap;
 }
+
 #playerControls {
   display: flex;
   justify-content: space-around;
   margin-bottom: 10px;
 }
+
 #blackJack {
   display: flex;
   justify-items: center;
@@ -137,11 +154,7 @@ p {
   box-shadow: 0 6px 6px #61faff;
 }
 
-/* buttons */
-#bet1,
-#bet5,
-#bet25,
-#bet100 {
+#bet1 {
   background-color: #353430;
   color: #fff;
   font-family: "Handjet", sans-serif;
@@ -156,6 +169,14 @@ p {
   background-color: #fff;
   color: #000;
 }
+
+#bet5 {
+  background-color: #353430;
+  color: #fff;
+  font-family: "Handjet", sans-serif;
+  height: 40px;
+  width: 100px;
+}
 #bet5:hover {
   box-shadow: 0 4px 4px #bd2318;
   color: #bd2318;
@@ -164,6 +185,14 @@ p {
   box-shadow: 0 4px 4px #bd2318;
   background-color: #800800;
   color: #fff;
+}
+
+#bet25 {
+  background-color: #353430;
+  color: #fff;
+  font-family: "Handjet", sans-serif;
+  height: 40px;
+  width: 100px;
 }
 #bet25:hover {
   box-shadow: 0 4px 4px #60f577;
@@ -174,6 +203,14 @@ p {
   background: #027713;
   color: #fff;
 }
+
+#bet100 {
+  background-color: #353430;
+  color: #fff;
+  font-family: "Handjet", sans-serif;
+  height: 40px;
+  width: 100px;
+}
 #bet100:hover {
   box-shadow: 0 4px 4px #fbff00;
   color: #fbff00;
@@ -183,6 +220,7 @@ p {
   background-color: #dfe079;
   color: #000;
 }
+
 #stand {
   background-color: #800800;
   border-radius: 50%;
@@ -190,15 +228,28 @@ p {
   font-family: "Handjet", sans-serif;
   height: 100px;
   width: 100px;
+  background-color: #353430;
+  color: #fff;
+  font-family: "Handjet", sans-serif;
+  height: 10vw;
+  width: 20vw;
+  margin: 5px;
+  border-radius: 10px;
+  font-size: 3vw;
 }
 #stand:hover {
   box-shadow: 0 4px 4px #cc170a;
+  box-shadow: 0 4px 4px #fff;
 }
 #stand:active {
   box-shadow: 0 4px 4px #cc170a;
   background-color: #ff6a60;
   color: #800800;
+  box-shadow: 0 4px 4px #fff;
+  background-color: #fff;
+  color: #000;
 }
+
 #hit {
   background-color: #027713;
   border-radius: 50%;
@@ -206,15 +257,28 @@ p {
   font-family: "Handjet", sans-serif;
   height: 100px;
   width: 100px;
+  background-color: #353430;
+  color: #fff;
+  font-family: "Handjet", sans-serif;
+  height: 10vw;
+  width: 20vw;
+  margin: 5px;
+  border-radius: 10px;
+  font-size: 3vw;
 }
 #hit:hover {
   box-shadow: 0 4px 4px #0caa23;
+  box-shadow: 0 4px 4px #fff;
 }
 #hit:active {
   box-shadow: 0 4px 4px #0caa23;
   background-color: #60f577;
   color: #027713;
+  box-shadow: 0 4px 4px #fff;
+  background-color: #fff;
+  color: #000;
 }
+
 #double {
   background-color: #0d1477;
   border-radius: 50%;
@@ -231,7 +295,7 @@ p {
   background-color: #5761ee;
   color: #0d1477;
 }
-/* deal */
+
 #deal {
   background-color: #9102ca;
   border-radius: 50%;
@@ -239,14 +303,26 @@ p {
   font-family: "Handjet", sans-serif;
   height: 100px;
   width: 100px;
+  background-color: #353430;
+  color: #fff;
+  font-family: "Handjet", sans-serif;
+  height: 10vw;
+  width: 20vw;
+  margin: 5px;
+  border-radius: 10px;
+  font-size: 3vw;
 }
 #deal:hover {
   box-shadow: 0 4px 4px #d324ff;
+  box-shadow: 0 4px 4px #fff;
 }
 #deal:active {
   box-shadow: 0 4px 4px #d324ff;
   background-color: #c97edb;
   color: #9102ca;
+  box-shadow: 0 4px 4px #fff;
+  background-color: #fff;
+  color: #000;
 }
 
 #newHand {
@@ -256,46 +332,42 @@ p {
   font-family: "Handjet", sans-serif;
   height: 100px;
   width: 100px;
+  background-color: #353430;
+  color: #fff;
+  font-family: "Handjet", sans-serif;
+  height: 10vw;
+  width: 20vw;
+  margin: 5px;
+  border-radius: 10px;
+  font-size: 3vw;
 }
 #newHand:hover {
   box-shadow: 0 4px 4px #ff9812;
+  box-shadow: 0 4px 4px #fff;
 }
 #newHand:active {
   box-shadow: #ff9812;
   background-color: #ffbb6d;
   color: #ff7300;
+  box-shadow: 0 4px 4px #fff;
+  background-color: #fff;
+  color: #000;
 }
 
-/* mobile buttons */
-/* Buttons */
-.bet-button,
-#hit,
-#stand,
-#deal,
-#newHand {
+.bet-button {
   background-color: #353430;
   color: #fff;
   font-family: "Handjet", sans-serif;
-  height: 10vw; /* Adjusted for responsive sizing */
-  width: 20vw; /* Adjusted for responsive sizing */
+  height: 10vw;
+  width: 20vw;
   margin: 5px;
-  border-radius: 10px; /* More touch-friendly */
-  font-size: 3vw; /* Adjusted for responsive sizing */
+  border-radius: 10px;
+  font-size: 3vw;
 }
-
-.bet-button:hover,
-#hit:hover,
-#stand:hover,
-#deal:hover,
-#newHand:hover {
+.bet-button:hover {
   box-shadow: 0 4px 4px #fff;
 }
-
-.bet-button:active,
-#hit:active,
-#stand:active,
-#deal:active,
-#newHand:active {
+.bet-button:active {
   box-shadow: 0 4px 4px #fff;
   background-color: #fff;
   color: #000;
@@ -305,46 +377,56 @@ p {
   h1 {
     font-size: 120px;
   }
-
   h2 {
     font-size: 30px;
   }
-
   h3 {
     font-size: 44px;
   }
-
   p {
     font-size: 40px;
   }
-
   .settings-container {
     justify-content: flex-end;
     font-size: 20px;
     padding-right: 100px;
   }
-
   .settings a {
     font-size: 20px;
   }
-
   .main-title {
     padding: 40px;
     height: 180px;
   }
-
   #playerRow {
     width: 40%;
     height: 40%;
   }
-
-  .bet-button,
-  #hit,
-  #stand,
-  #deal,
+  .bet-button {
+    height: 40px;
+    width: 100px;
+    font-size: 16px;
+  }
+  #hit {
+    height: 40px;
+    width: 100px;
+    font-size: 16px;
+  }
+  #stand {
+    height: 40px;
+    width: 100px;
+    font-size: 16px;
+  }
+  #deal {
+    height: 40px;
+    width: 100px;
+    font-size: 16px;
+  }
   #newHand {
     height: 40px;
     width: 100px;
     font-size: 16px;
   }
 }
+
+/*# sourceMappingURL=main.css.map */
