@@ -1,4 +1,11 @@
-/* rules styling */
+@keyframes moveBanner {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
 body {
   background-color: #1b1919;
   font-family: "Handjet", sans-serif;
@@ -16,6 +23,7 @@ header {
   justify-content: right;
   font-size: 20px;
 }
+
 nav a {
   color: #76cbfc;
   text-decoration: none;
@@ -49,7 +57,7 @@ p {
 
 .blackjack {
   color: #76cbfc;
-  background-color: #9494945b;
+  background-color: rgba(148, 148, 148, 0.3568627451);
   border-top: 4px solid #2c2c2c;
   border-bottom: 4px solid #2c2c2c;
   display: inline-flex;
@@ -60,7 +68,7 @@ p {
 }
 .blackjack:hover {
   color: #00ffbf;
-  background-color: #c4c4c4af;
+  background-color: rgba(196, 196, 196, 0.6862745098);
   border-top: 4px solid #76cbfc;
   border-bottom: 4px solid #76cbfc;
 }
@@ -71,19 +79,11 @@ p {
   font-weight: SemiBold;
   padding: 40px;
 }
-
 .rulesList:hover {
-  background-color: #8b8a8af8;
+  background-color: rgba(139, 138, 138, 0.9725490196);
   border: 2px solid #949494;
   box-shadow: 0 6px 6px #76cbfc;
   color: #76cbfc;
 }
 
-@keyframes moveBanner {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(100%);
-  }
-}
+/*# sourceMappingURL=rules.css.map */
