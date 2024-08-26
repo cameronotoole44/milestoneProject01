@@ -1,0 +1,504 @@
+$color_1: #fff;
+$color_2: #444;
+$color_3: #c70808;
+$color_4: #444444;
+$color_5: #fbff00;
+$color_6: #aaa;
+$color_7: black;
+$color_8: #000;
+$color_9: #bd2318;
+$color_10: #60f577;
+$color_11: #800800;
+$color_12: #027713;
+$color_13: #0d1477;
+$color_14: #9102ca;
+$color_15: #ff7300;
+$font-family_1: "Handjet", sans-serif;
+$font-family_2: "Handjet";
+$background-color_1: #141414;
+$background-color_2: #ff449baf;
+$background-color_3: #353430;
+$background-color_4: #fff;
+$background-color_5: #800800;
+$background-color_6: #dfe079;
+$background-color_7: #ff6a60;
+$background-color_8: #027713;
+$background-color_9: #60f577;
+$background-color_10: #0d1477;
+$background-color_11: #5761ee;
+$background-color_12: #9102ca;
+$background-color_13: #c97edb;
+$background-color_14: #ff7300;
+$background-color_15: #ffbb6d;
+
+/* buttons */
+/* deal */
+/* mobile buttons */
+/* Buttons */
+body {
+    background-color: $background-color_1;
+    color: $color_1;
+    font-family: $font-family_1;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    padding: 10px;
+}
+
+section {
+    padding: 10px;
+}
+
+h1 {
+    color: $color_2;
+    font-weight: SemiBold 900;
+    font-size: 8vw;
+    font-family: $font-family_2;
+    text-align: center;
+    margin: 0;
+
+    &:hover {
+        color: $color_3;
+        border-bottom: 2px dashed #fbff00;
+        box-shadow: 0 4px 0 #fcfcfc;
+        transition: color 2s;
+    }
+}
+
+h2 {
+    color: $color_3;
+    font-size: 5vw;
+}
+
+h3 {
+    color: $color_3;
+    font-size: 6vw;
+    text-align: left;
+}
+
+p {
+    text-align: center;
+    font-size: 4vw;
+}
+
+.settings-container {
+    display: flex;
+    justify-content: right;
+    font-size: 3vw;
+    padding: 0px 100px 0px 0px;
+}
+
+.settings {
+    a {
+        text-decoration: none;
+        color: $color_4;
+        font-size: 3vw;
+        padding: 10px;
+
+        &:hover {
+            color: $color_5;
+            box-shadow: 0 0px 4px #fbff00;
+        }
+    }
+}
+
+.main-title {
+    align-items: flex-end;
+    background-image: url("../assets/skyline.png");
+    background-size: contain;
+    background-position: top;
+    color: $color_1;
+    text-align: center;
+    padding: 20px;
+    height: auto;
+}
+
+.close-button {
+    color: $color_6;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+
+    &:hover {
+        color: $color_7;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    &:focus {
+        color: $color_7;
+        text-decoration: none;
+        cursor: pointer;
+    }
+}
+
+.cardHolder {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card-container {
+    margin-right: 10px;
+}
+
+#playerRow {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: auto;
+    background-color: $background-color_2;
+    padding: 20px;
+}
+
+#board {
+    background-image: url("../assets/boardBackground.png");
+    background-size: fixed;
+    border: 4px solid #726f6f;
+    height: auto;
+    margin: 10px;
+    padding: 20px;
+}
+
+#gambaSection {
+    padding: 10px;
+}
+
+#gambaButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#playerControls {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+#blackJack {
+    display: flex;
+    justify-items: center;
+    background: transparent;
+
+    &:hover {
+        box-shadow: 0 6px 6px #61faff;
+    }
+}
+
+#bet1 {
+    background-color: $background-color_3;
+    color: $color_1;
+    font-family: $font-family_1;
+    height: 40px;
+    width: 100px;
+
+    &:hover {
+        box-shadow: 0 4px 4px #fff;
+    }
+
+    &:active {
+        box-shadow: 0 4px 4px #fff;
+        background-color: $background-color_4;
+        color: $color_8;
+    }
+}
+
+#bet5 {
+    background-color: $background-color_3;
+    color: $color_1;
+    font-family: $font-family_1;
+    height: 40px;
+    width: 100px;
+
+    &:hover {
+        box-shadow: 0 4px 4px #bd2318;
+        color: $color_9;
+    }
+
+    &:active {
+        box-shadow: 0 4px 4px #bd2318;
+        background-color: $background-color_5;
+        color: $color_1;
+    }
+}
+
+#bet25 {
+    background-color: $background-color_3;
+    color: $color_1;
+    font-family: $font-family_1;
+    height: 40px;
+    width: 100px;
+
+    &:hover {
+        box-shadow: 0 4px 4px #60f577;
+        color: $color_10;
+    }
+
+    &:active {
+        box-shadow: 0 4px 4px #60f577;
+        background: #027713;
+        color: $color_1;
+    }
+}
+
+#bet100 {
+    background-color: $background-color_3;
+    color: $color_1;
+    font-family: $font-family_1;
+    height: 40px;
+    width: 100px;
+
+    &:hover {
+        box-shadow: 0 4px 4px #fbff00;
+        color: $color_5;
+    }
+
+    &:active {
+        box-shadow: 0 4px 4px #fbff00;
+        background-color: $background-color_6;
+        color: $color_8;
+    }
+}
+
+#stand {
+    background-color: $background-color_5;
+    border-radius: 50%;
+    color: $color_1;
+    font-family: $font-family_1;
+    height: 100px;
+    width: 100px;
+    background-color: $background-color_3;
+    color: $color_1;
+    font-family: $font-family_1;
+    height: 10vw;
+    width: 20vw;
+    margin: 5px;
+    border-radius: 10px;
+    font-size: 3vw;
+
+    &:hover {
+        box-shadow: 0 4px 4px #cc170a;
+        box-shadow: 0 4px 4px #fff;
+    }
+
+    &:active {
+        box-shadow: 0 4px 4px #cc170a;
+        background-color: $background-color_7;
+        color: $color_11;
+        box-shadow: 0 4px 4px #fff;
+        background-color: $background-color_4;
+        color: $color_8;
+    }
+}
+
+#hit {
+    background-color: $background-color_8;
+    border-radius: 50%;
+    color: $color_1;
+    font-family: $font-family_1;
+    height: 100px;
+    width: 100px;
+    background-color: $background-color_3;
+    color: $color_1;
+    font-family: $font-family_1;
+    height: 10vw;
+    width: 20vw;
+    margin: 5px;
+    border-radius: 10px;
+    font-size: 3vw;
+
+    &:hover {
+        box-shadow: 0 4px 4px #0caa23;
+        box-shadow: 0 4px 4px #fff;
+    }
+
+    &:active {
+        box-shadow: 0 4px 4px #0caa23;
+        background-color: $background-color_9;
+        color: $color_12;
+        box-shadow: 0 4px 4px #fff;
+        background-color: $background-color_4;
+        color: $color_8;
+    }
+}
+
+#double {
+    background-color: $background-color_10;
+    border-radius: 50%;
+    color: $color_1;
+    font-family: $font-family_1;
+    height: 100px;
+    width: 100px;
+
+    &:hover {
+        box-shadow: 0 4px 4px #1723c7;
+    }
+
+    &:active {
+        box-shadow: 0 4px 4px #1723c7;
+        background-color: $background-color_11;
+        color: $color_13;
+    }
+}
+
+#deal {
+    background-color: $background-color_12;
+    border-radius: 50%;
+    color: $color_1;
+    font-family: $font-family_1;
+    height: 100px;
+    width: 100px;
+    background-color: $background-color_3;
+    color: $color_1;
+    font-family: $font-family_1;
+    height: 10vw;
+    width: 20vw;
+    margin: 5px;
+    border-radius: 10px;
+    font-size: 3vw;
+
+    &:hover {
+        box-shadow: 0 4px 4px #d324ff;
+        box-shadow: 0 4px 4px #fff;
+    }
+
+    &:active {
+        box-shadow: 0 4px 4px #d324ff;
+        background-color: $background-color_13;
+        color: $color_14;
+        box-shadow: 0 4px 4px #fff;
+        background-color: $background-color_4;
+        color: $color_8;
+    }
+}
+
+#newHand {
+    background-color: $background-color_14;
+    border-radius: 50%;
+    color: $color_1;
+    font-family: $font-family_1;
+    height: 100px;
+    width: 100px;
+    background-color: $background-color_3;
+    color: $color_1;
+    font-family: $font-family_1;
+    height: 10vw;
+    width: 20vw;
+    margin: 5px;
+    border-radius: 10px;
+    font-size: 3vw;
+
+    &:hover {
+        box-shadow: 0 4px 4px #ff9812;
+        box-shadow: 0 4px 4px #fff;
+    }
+
+    &:active {
+        box-shadow: #ff9812;
+        background-color: $background-color_15;
+        color: $color_15;
+        box-shadow: 0 4px 4px #fff;
+        background-color: $background-color_4;
+        color: $color_8;
+    }
+}
+
+.bet-button {
+    background-color: $background-color_3;
+    color: $color_1;
+    font-family: $font-family_1;
+    height: 10vw;
+    width: 20vw;
+    margin: 5px;
+    border-radius: 10px;
+    font-size: 3vw;
+
+    &:hover {
+        box-shadow: 0 4px 4px #fff;
+    }
+
+    &:active {
+        box-shadow: 0 4px 4px #fff;
+        background-color: $background-color_4;
+        color: $color_8;
+    }
+}
+
+@media (min-width: 769px) {
+    h1 {
+        font-size: 120px;
+    }
+
+    h2 {
+        font-size: 30px;
+    }
+
+    h3 {
+        font-size: 44px;
+    }
+
+    p {
+        font-size: 40px;
+    }
+
+    .settings-container {
+        justify-content: flex-end;
+        font-size: 20px;
+        padding-right: 100px;
+    }
+
+    .settings {
+        a {
+            font-size: 20px;
+        }
+    }
+
+    .main-title {
+        padding: 40px;
+        height: 180px;
+    }
+
+    #playerRow {
+        width: 40%;
+        height: 40%;
+    }
+
+    .bet-button {
+        height: 40px;
+        width: 100px;
+        font-size: 16px;
+    }
+
+    #hit {
+        height: 40px;
+        width: 100px;
+        font-size: 16px;
+    }
+
+    #stand {
+        height: 40px;
+        width: 100px;
+        font-size: 16px;
+    }
+
+    #deal {
+        height: 40px;
+        width: 100px;
+        font-size: 16px;
+    }
+
+    #newHand {
+        height: 40px;
+        width: 100px;
+        font-size: 16px;
+    }
+}

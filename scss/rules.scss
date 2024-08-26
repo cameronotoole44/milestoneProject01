@@ -1,0 +1,105 @@
+$color_1: #76cbfc;
+$color_2: #00ffb3;
+$color_3: #fff;
+$color_4: #00ffbf;
+$font-family_1: "Handjet", sans-serif;
+$background-color_1: #1b1919;
+$background-color_2: #c4c4c4;
+$background-color_3: #9494945b;
+$background-color_4: #c4c4c4af;
+$background-color_5: #8b8a8af8;
+
+@keyframes moveBanner {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(100%);
+    }
+}
+
+body {
+    background-color: $background-color_1;
+    font-family: $font-family_1;
+    background-image: url("../assets/skyline.png");
+    align-items: flex-end;
+    background-size: cover;
+    overflow: hidden;
+    background-position: top;
+    padding: 40px;
+    height: 180px;
+}
+
+header {
+    display: flex;
+    justify-content: right;
+    font-size: 20px;
+}
+
+nav {
+    a {
+        color: $color_1;
+        text-decoration: none;
+        display: flex;
+
+        &:hover {
+            color: $color_2;
+            box-shadow: 0 0 4px #00ffb3;
+            display: inline-block;
+        }
+    }
+}
+
+h1 {
+    align-items: center;
+    text-decoration: 4px underline #ad4cda;
+    text-shadow: 8px 8px 8px #76cbfc;
+    font-size: 100px;
+    font-weight: SemiBold 600;
+    text-align: center;
+    color: $color_3;
+}
+
+h2 {
+    font-size: 40px;
+}
+
+p {
+    background-color: $background-color_2;
+    height: 80px;
+    font-size: 60px;
+}
+
+.blackjack {
+    color: $color_1;
+    background-color: $background-color_3;
+    border-top: 4px solid #2c2c2c;
+    border-bottom: 4px solid #2c2c2c;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-evenly;
+    position: relative;
+    animation: moveBanner 20s linear infinite;
+
+    &:hover {
+        color: $color_4;
+        background-color: $background-color_4;
+        border-top: 4px solid #76cbfc;
+        border-bottom: 4px solid #76cbfc;
+    }
+}
+
+.rulesList {
+    color: $color_1;
+    font-size: 35px;
+    font-weight: SemiBold;
+    padding: 40px;
+
+    &:hover {
+        background-color: $background-color_5;
+        border: 2px solid #949494;
+        box-shadow: 0 6px 6px #76cbfc;
+        color: $color_1;
+    }
+}

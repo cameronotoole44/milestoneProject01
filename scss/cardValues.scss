@@ -1,0 +1,61 @@
+$color_1: #000;
+$color_2: #00ffb3;
+$color_3: #76cbfc;
+$font-family_1: "Handjet", sans-serif;
+$background-color_1: #949494a1;
+$background-color_2: #949494;
+$background-color_3: #4e4e4e;
+
+/* general */
+.cardBoard {
+    border: 6px solid #000;
+    padding: 40px;
+    margin: 60px;
+    background-color: $background-color_1;
+
+    &:hover {
+        background-color: $background-color_2;
+    }
+}
+
+body {
+    background-color: $background-color_3;
+    color: $color_1;
+    font-family: $font-family_1;
+    background-image: url("../assets/background2.png");
+    background-size: cover;
+}
+
+header {
+    display: flex;
+    justify-content: right;
+    font-size: 20px;
+}
+
+nav {
+    a {
+        color: $color_2;
+        text-decoration: none;
+        display: flex;
+    }
+}
+
+a {
+    &:hover {
+        color: $color_3;
+        box-shadow: 0 0 4px #76cbfc;
+        display: inline-block;
+    }
+}
+
+h1 {
+    color: $color_1;
+    text-shadow: 0 6px 6px #00ffb3;
+    font-size: 100px;
+    text-align: center;
+}
+
+span {
+    font-size: 40px;
+    font-weight: Medium 500;
+}
