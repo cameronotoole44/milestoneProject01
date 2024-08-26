@@ -1,13 +1,14 @@
+/* general */
 .cardBoard {
   border: 6px solid #000;
   padding: 40px;
   margin: 60px;
-  background-color: #949494a1;
+  background-color: rgba(148, 148, 148, 0.631372549);
 }
 .cardBoard:hover {
   background-color: #949494;
 }
-/* general */
+
 body {
   background-color: #4e4e4e;
   color: #000;
@@ -27,6 +28,7 @@ nav a {
   text-decoration: none;
   display: flex;
 }
+
 a:hover {
   color: #76cbfc;
   box-shadow: 0 0 4px #76cbfc;
@@ -39,7 +41,10 @@ h1 {
   font-size: 100px;
   text-align: center;
 }
+
 span {
   font-size: 40px;
   font-weight: Medium 500;
 }
+
+/*# sourceMappingURL=cardValues.css.map */
