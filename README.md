@@ -1,35 +1,66 @@
-# Milestone Project 01
+# Blackjack - Milestone Project 01
 
-# [demo](https://cameronotoole44.github.io/milestoneProject01/)
+A browser-based Blackjack game showcasing proficiency in HTML, CSS, and JavaScript.
 
-## Blackjack
+[Play the Demo](https://cameronotoole44.github.io/milestoneProject01/)
 
-This is my first milestone project, that will showcase my proficiency in HTML, CSS, and JavaScript.
-The goal of this project was to create a browser game, using best practices and my foundational knowledge up until this point.  
-I chose to create a game of Blackjack, a classic gamba game. Player vs. Dealer. Closest to 21 without going over wins.
-Overall I had fun working on this, I learned a few new things and picked up on certain creational patterns which is pretty cool.  
-The switching of the Ace values stumped me for a minute, but with enough research and patience, I'm proud I figured that one out.
-I also ran into the issue of the Dealer's cards being duplicated in the UI in certain cases. I ended up creating individual card containers for them to match the number of cards in the Dealer's hand.
+## Table of Contents
 
-## Current WIP
-An 'Insurance', 'Split', and 'Double' feature
-Adding another player besides the 'Dealer' at some point.
+- [About the Project](#about-the-project)
+- [Features](#features)
+- [How to Play](#how-to-play)
+- [Technologies Used](#technologies-used)
+- [Future Improvements](#future-improvements)
+- [Known Issues](#known-issues)
+- [Contributing](#contributing)
+- [License](#license)
 
-**re doing this whole project because I know a lot more now lol**
+## About the Project
 
-### Functionality:
+This Blackjack game is my first milestone project, created to demonstrate my foundational knowledge of web development. It's a classic Player vs. Dealer game where the goal is to get as close to 21 as possible without going over.
 
-*Place bet by clicking bet buttons $1, $5, $25, $100. The player starts with $1000  
-*Click 'Deal' to begin the round  
-*Click 'Hit' to draw another card  
-*Click 'Stand' to end turn  
-\*Click 'New Hand' to start another round
+Throughout the development process, I learned new concepts and picked up on certain creational patterns. Overcoming challenges, such as implementing the switching of Ace values and resolving UI issues, has been a rewarding experience.
 
-### Features:
+## Features
 
-- Aces value switches from 11 to 1 if the player/dealer is over 21
-- Dealers turn automated until the dealer hits at least 17
-- Rules of Blackjack can be found : [Rules](https://cameronotoole44.github.io/milestoneProject01/rules/rules.html)
-- Card Values : [Card Values](https://cameronotoole44.github.io/milestoneProject01/rules/cardValues.html)
+- Player vs. Dealer gameplay
+- Intuitive betting system
+- Automated dealer turns
+- Dynamic Ace value (11 or 1) based on hand total
+- Responsive design (work in progress)
+
+## How to Play
+
+1. Place your bet using the betting buttons ($1, $5, $25, $100)
+2. Click 'Deal' to start the round
+3. Choose to 'Hit' for another card or 'Stand' to end your turn
+4. The dealer will then play their hand (automatically hits until reaching at least 17)
+5. Winner is determined, and you can start a new hand
+
+## Technologies Used
+
+- HTML
+- CSS
+- JavaScript
+- SCSS (on a separate branch)
+
+## Future Improvements
+
+- Implement 'Insurance', 'Split', and 'Double' features
+- Add multiplayer functionality
+- Enhance mobile responsiveness
+
+## Known Issues
+
+- Betting logic needs refinement
+- Player's blackjack (21 on initial deal) not registering correctly
+- False losses occurring in some scenarios
+- Overall game logic and flow require thorough review and improvement
+
+## Contributing
+
+This project is currently a personal milestone project, but suggestions and feedback are welcome. Feel free to open an issue or submit a pull request.
+
+## Credits
 
 Thanks to [Hanker](https://argametina.itch.io/), [Anisumz](https://ansimuz.itch.io/), and [Chr0ma-dave](https://chroma-dave.itch.io/) for the images!
